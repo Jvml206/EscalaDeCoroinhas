@@ -16,12 +16,12 @@
 }
 
 .nivel2 {
-    background: #d60000 !important;
     color: white !important;
+    background: #d60000e3 !important;
 }
 
 .acolito {
-    background: black !important;
+    background: rgba(0, 0, 0, 0.829) !important;
     color: white !important;
 }
 
