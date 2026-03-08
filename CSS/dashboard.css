@@ -1,0 +1,50 @@
+@import url("base.css");
+
+.h1-dash{
+    font-size: 42px;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+    color: var(--vermelho);
+    border-bottom: 3px solid var(--vermelho);
+    padding-bottom: 6px;
+}
+
+.card-modern {
+    border-radius: 18px;
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.85); /* leve mais opaco */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.card-modern:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+}
+
+.card-modern h2 {
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.card-modern h5 {
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.card-modern:nth-child(1) { background: rgba(173, 216, 230, 0.75); } /* Coroinhas 🙋‍♂️ */
+.card-modern:nth-child(2) { background: rgba(144, 238, 144, 0.75); } /* Servindo 🙌 */
+.card-modern:nth-child(3) { background: rgba(255, 228, 196, 0.75); } /* Ex-coroinhas 🏅 */
+.card-modern:nth-child(4) { background: rgba(255, 182, 193, 0.75); } /* Média ⚖️ */
+.card-modern:nth-child(5) { background: rgba(240, 230, 140, 0.75); } /* Nível 1 🤍 */
+.card-modern:nth-child(6) { background: rgba(250, 128, 114, 0.75); } /* Nível 2 ❤️ */
+.card-modern:nth-child(7) { background: rgba(211, 211, 211, 0.75); } /* Acólitos 🖤 */
+.card-modern:nth-child(8) { background: rgba(135, 206, 250, 0.75); } /* Comunidades ⛪ */
+.card-modern:nth-child(9) { background: rgba(221, 160, 221, 0.75); } /* Celebrações 🧔🏻 */

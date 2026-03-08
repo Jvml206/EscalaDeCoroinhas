@@ -1,0 +1,269 @@
+@import url("baseSite.css");
+
+/* Tabela Nível 1 */
+.tableaN1 {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #c00;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tableaN1 thead {
+    background-color: #c00;
+    color: #fff; 
+    font-weight: bold;
+}
+
+.tableaN1 thead tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+}
+.tableaN1 thead tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.tableaN1 th, .tableaN1 td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 0.5px solid #ddd;
+}
+
+.tableaN1 tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tableaN1 tbody tr:hover {
+    background-color: #ffe6e6;
+}
+
+.tableaN1 td {
+    vertical-align: middle;
+}
+
+/* Tabela Nível 2*/
+.tableaN2 {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;          
+    font-family: Arial, sans-serif;
+    background-color: rgba(192, 2, 2, 0.911);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;        
+    overflow: hidden;           
+}
+
+.tableaN2 thead {
+    background-color: #fff;
+    color: #c00;
+    font-weight: bold;
+}
+
+.tableaN2 thead tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+}
+.tableaN2 thead tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.tableaN2 th, .tableaN2 td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tableaN2 tbody tr:nth-child(even) {
+    background-color: #ffcccc;
+    color: #000000;
+}
+
+.tableaN2 tbody tr:hover {
+    background-color: #ffe6e6;
+    color: #000000;
+}
+
+.tableaN2 td {
+    vertical-align: middle;
+}
+
+/* Tabela Acólitos */
+.tableaA {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;          
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;        
+    overflow: hidden;           
+}
+
+.tableaA thead {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.tableaA thead tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+}
+.tableaA thead tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.tableaA th, .tableaA td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tableaA tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tableaA tbody tr:hover {
+    background-color: #d9d9d9;
+}
+
+.tableaA td {
+    vertical-align: middle;
+}
+
+/* Tabela Comunidades */
+.tableaC {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;          
+    font-family: Arial, sans-serif;
+    background-color: #e6f2ff;
+    color: #003366;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;        
+    overflow: hidden;           
+}
+
+.tableaC thead {
+    background-color: #ffd900ae;
+    color: #003366;
+    font-weight: bold;
+    font-size: large;
+}
+
+.tableaC thead tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+}
+.tableaC thead tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.tableaC th, .tableaC td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid #b3cde0;
+}
+
+.tableaC tbody tr:nth-child(even) {
+    background-color: #cce0ff;
+}
+
+.tableaC tbody tr:hover {
+    background-color: #ffe680;
+}
+
+.tableaC td {
+    vertical-align: middle;
+}
+
+/* Tabela Geral Coroinhas */
+.tableaG {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;          
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #222;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;        
+    overflow: hidden;           
+}
+
+.tableaG thead {
+    background-color: #ff6666;
+    color: #fff;
+    font-weight: bold;
+}
+
+.tableaG thead tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+}
+.tableaG thead tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.tableaG th, .tableaG td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tableaG tbody tr:nth-child(even) {
+    background-color: #ffe6e6;
+}
+
+.tableaG tbody tr:hover {
+    background-color: #ff9999;
+}
+
+.tableaG td {
+    vertical-align: middle;
+}
+
+/* Tabela Celebrações */
+.tableaCe {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #003366;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Cabeçalho */
+.tableaCe thead {
+    background-color: #66b3ff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.tableaCe thead tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+}
+.tableaCe thead tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.tableaCe th, .tableaCe td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid #b3d9ff;
+}
+
+.tableaCe tbody tr:nth-child(even) {
+    background-color: #e6f2ff;
+}
+
+.tableaCe tbody tr:hover {
+    background-color: #3399ff;
+}
+
+.tableaCe td {
+    vertical-align: middle;
+}
