@@ -39,7 +39,7 @@ require_once "validaUser.php";
                 spl_autoload_register(function ($class) {
                     require_once "Classes/{$class}.class.php";
                 });
-                $c = new celebracao();
+                $c = new Celebracao();
                 $Celebracoes = $c->all();
 
                 $Comunidade = new Comunidade();

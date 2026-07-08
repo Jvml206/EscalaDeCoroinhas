@@ -9,7 +9,7 @@ spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
 });
 
-$c = new comunidade();
+$c = new Comunidade();
 $comunidades = $c->allOrder("ASC");
 
 $cor = new Coroinha();

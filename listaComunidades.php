@@ -37,7 +37,7 @@ require_once "validaUser.php";
                 spl_autoload_register(function ($class) {
                     require_once "Classes/{$class}.class.php";
                 });
-                $c = new comunidade();
+                $c = new Comunidade();
                 $Comunidades = $c->all();
                 foreach ($Comunidades as $comunidade):
                     ?>
