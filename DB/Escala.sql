@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS escala_coroinhas;
 USE escala_coroinhas;
 
+DROP TABLE IF EXISTS Usuario;
 CREATE TABLE IF NOT EXISTS Usuario (
     idUsuario INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     emailUsuario VARCHAR(100) NOT NULL UNIQUE,
@@ -8,6 +9,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
     nivelAcessoUsuario INT(11) NOT NULL
 );
 
+DROP TABLE IF EXISTS Coroinha;
 CREATE TABLE IF NOT EXISTS Coroinha (
     idCoroinha INT AUTO_INCREMENT PRIMARY KEY,
     nomeCoroinha VARCHAR(100) NOT NULL,
@@ -20,11 +22,13 @@ CREATE TABLE IF NOT EXISTS Coroinha (
     numeroServindo INT DEFAULT 0
 );
 
+DROP TABLE IF EXISTS Comunidade;
 CREATE TABLE IF NOT EXISTS Comunidade (
     idComunidade INT AUTO_INCREMENT PRIMARY KEY,
     nomeComunidade VARCHAR(100) NOT NULL
 );
 
+DROP TABLE IF EXISTS Celebracao;
 CREATE TABLE IF NOT EXISTS Celebracao (
     idCelebracao INT AUTO_INCREMENT PRIMARY KEY,
     semana VARCHAR(5) NOT NULL,            					-- 1,2,3,4,5
@@ -35,6 +39,7 @@ CREATE TABLE IF NOT EXISTS Celebracao (
         REFERENCES comunidade(idComunidade)
 );
 
+DROP TABLE IF EXISTS Escala;
 CREATE TABLE IF NOT EXISTS Escala (
     idEscala INT AUTO_INCREMENT PRIMARY KEY,
     idCelebracaoFK INT NOT NULL,
@@ -50,6 +55,18 @@ CREATE TABLE IF NOT EXISTS Escala (
 	FOREIGN KEY (idComunidadeFK)
         REFERENCES comunidade(idComunidade)
         ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS RecuperacaoSenha;
+CREATE TABLE RecuperacaoSenha (
+    idRecuperacaoSenha INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idUsuarioFK INT(11) NOT NULL,
+    tokenRecuperacaoSenha VARCHAR(200) NOT NULL UNIQUE,
+    expiraRecuperacaoSenha DATETIME NOT NULL,
+    usadoRecuperacaoSenha TINYINT(1) DEFAULT 0,
+    criadoRecuperacaoSenha DATETIME DEFAULT CURRENT_TIMESTAMP(),
+    KEY idUsuarioFK (idUsuarioFK),
+    CONSTRAINT recuperacao_senha_usuario FOREIGN KEY (idUsuarioFK) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
 );
 
 DELIMITER $$
@@ -73,4 +90,4 @@ BEGIN
 END$$
 DELIMITER ;
 
-INSERT INTO Usuario (emailUsuario,senhaUsuario,nivelAcessoUsuario)values('lopesdrimachado2@gmail.com','$2y$10$hi.H/Qj3lC6bu6lZJ4LaFeyQR1TWtSuuBhjYwBF4Lu.2i8Q8hOVny',1); #senha: 123
+select * from coroinha;

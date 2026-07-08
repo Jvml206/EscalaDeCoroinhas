@@ -48,7 +48,7 @@ if (isset($_POST['btnCadastrar'])) {
                     $idCelebracao = $celebracao->idCelebracao;
 
                     $comunidadeSemana = $_POST['comunidade'][$semana] ?? null;
-                    
+
                     /* APAGA ESCALA ANTIGA */
                     $del = $db->prepare("DELETE FROM Escala WHERE idCelebracaoFK = :id");
                     $del->execute([":id" => $idCelebracao]);
@@ -56,7 +56,7 @@ if (isset($_POST['btnCadastrar'])) {
                     /* SALVAR COMUNIDADE */
                     if ($comunidadeSemana != "") {
                         // Escolhe a posição da comunidade na Segunda — por exemplo, posicao 1
-                        $posicao = 2; // ou ajuste conforme necessário
+                        $posicao = 3; // ou ajuste conforme necessário
 
                         // Insere comunidade na tabela Escala
                         $sqlCom = $db->prepare("INSERT INTO Escala (idCelebracaoFK, posicao, idComunidadeFK) VALUES (:idCelebracao, :pos, :com)");
@@ -197,23 +197,25 @@ foreach ($result as $r) {
                             <td class="align-middle text-center"><?= $semana ?>º Segunda</td>
                             <td class="align-middle text-center">Noite</td>
                             <!-- coroinha -->
-                            <td>
-                                <select name="escala[<?= $semana ?>][Segunda][Noite][1]" class="form-select">
-                                    <option value="" class="align-middle text-center">Coroinha</option>
-                                    <?php
-                                    $selecionado = $Escalas[$semana]['Segunda']['Noite'][1] ?? null;
-                                    ?>
-                                    <?php foreach ($coroinhas as $c): ?>
-                                        <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
-                                            <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
-                                            class="align-middle text-center">
-                                            <?= $c->nomeCoroinha ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
+                            <?php for ($pos = 1; $pos <= 2; $pos++): ?>
+                                <td>
+                                    <select name="escala[<?= $semana ?>][Segunda][Noite][<?= $pos ?>]" class="form-select">
+                                        <option value="" class="align-middle text-center">Coroinha</option>
+                                        <?php
+                                        $selecionado = $Escalas[$semana]['Segunda']['Noite'][$pos] ?? null;
+                                        ?>
+                                        <?php foreach ($coroinhas as $c): ?>
+                                            <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
+                                                <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
+                                                class="align-middle text-center">
+                                                <?= $c->nomeCoroinha ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                            <?php endfor; ?>
                             <!-- comunidade -->
-                            <td colspan="4">
+                            <td colspan="3">
                                 <select name="comunidade[<?= $semana ?>]" class="form-select align-middle text-center">
                                     <?php $comSel = $ComunidadesEscala[$semana] ?? null; ?>
                                     <option value="">Selecionar comunidade</option>

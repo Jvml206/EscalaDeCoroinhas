@@ -89,7 +89,8 @@ foreach ($comunidades as $com) {
                         </td>
                         <td>Manhã</td>
                         <?php for ($pos = 1; $pos <= 5; $pos++): ?>
-                            <td data-nivel="<?= $coroinhasMap[$Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha']]->nivel ?>">
+                            <td
+                                data-nivel="<?= $coroinhasMap[$Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha']]->nivel ?>">
                                 <?= isset($Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha'])
                                     ? $coroinhasMap[$Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha']]->nomeCoroinha
                                     : '--' ?>
@@ -99,7 +100,8 @@ foreach ($comunidades as $com) {
                     <tr>
                         <td>Noite</td>
                         <?php for ($pos = 1; $pos <= 5; $pos++): ?>
-                            <td data-nivel="<?= $coroinhasMap[$Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha']]->nivel ?>">
+                            <td
+                                data-nivel="<?= $coroinhasMap[$Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha']]->nivel ?>">
                                 <?= isset($Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha'])
                                     ? $coroinhasMap[$Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha']]->nomeCoroinha
                                     : '--' ?>
@@ -110,16 +112,18 @@ foreach ($comunidades as $com) {
                         <td><?= $semana ?>º Segunda</td>
                         <td>Noite</td>
                         <!-- coroinha -->
-                        <td data-nivel="<?= isset($Escalas[$semana]['Segunda']['Noite'][1]['coroinha'])
-                            ? $coroinhasMap[$Escalas[$semana]['Segunda']['Noite'][1]['coroinha']]->nivel
-                            : '' ?>">
-                            <?= isset($Escalas[$semana]['Segunda']['Noite'][1]['coroinha'])
-                                ? $coroinhasMap[$Escalas[$semana]['Segunda']['Noite'][1]['coroinha']]->nomeCoroinha
-                                : '--' ?>
-                        </td>
+                        <?php for ($pos = 1; $pos <= 2; $pos++): ?>
+                            <td data-nivel="<?= isset($Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha'])
+                                ? $coroinhasMap[$Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha']]->nivel
+                                : '' ?>">
+                                <?= isset($Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha'])
+                                    ? $coroinhasMap[$Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha']]->nomeCoroinha
+                                    : '--' ?>
+                            </td>
+                        <?php endfor; ?>
                         <!-- comunidade -->
-                        <td colspan="4">
-                            <?= $EscalasCom[$semana]['Segunda']['Noite'][2]['comunidade'] ?? '--' ?>
+                        <td colspan="3">
+                            <?= $EscalasCom[$semana]['Segunda']['Noite'][3]['comunidade'] ?? '--' ?>
                         </td>
                     </tr>
                 <?php endfor; ?>
