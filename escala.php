@@ -140,103 +140,105 @@ foreach ($result as $r) {
         <h3 class="tituloPrincipal">Escala Coroinhas Com. N. S. de Fátima</h3>
 
         <form method="post" action="escala.php">
-            <table class="table tabela overflow-hidden dataTable">
-                <thead class="table-success">
-                    <tr>
-                        <th>Dia</th>
-                        <th>Turno</th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php for ($semana = 1; $semana <= 5; $semana++): ?>
+            <div class="table-responsive tabela-scroll">
+                <table class="table tabela overflow-hidden dataTable">
+                    <thead class="table-success">
                         <tr>
-                            <td rowspan="2" class="align-middle text-center">
-                                <?= $semana ?>º Domingo
-                            </td>
-                            <td class="align-middle text-center">Manhã</td>
-                            <?php for ($pos = 1; $pos <= 5; $pos++): ?>
-                                <td>
-                                    <select name="escala[<?= $semana ?>][Domingo][Manhã][<?= $pos ?>]" class="form-select">
-                                        <option value="" class="align-middle text-center">--</option>
-                                        <?php $selecionado = $Escalas[$semana]['Domingo']['Manhã'][$pos] ?? null; ?>
-                                        <?php foreach ($coroinhas as $c): ?>
-                                            <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
-                                                <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
-                                                class="align-middle text-center">
-                                                <?= $c->nomeCoroinha ?>
+                            <th>Dia</th>
+                            <th>Turno</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php for ($semana = 1; $semana <= 5; $semana++): ?>
+                            <tr>
+                                <td rowspan="2" class="align-middle text-center">
+                                    <?= $semana ?>º Domingo
+                                </td>
+                                <td class="align-middle text-center">Manhã</td>
+                                <?php for ($pos = 1; $pos <= 5; $pos++): ?>
+                                    <td>
+                                        <select name="escala[<?= $semana ?>][Domingo][Manhã][<?= $pos ?>]" class="form-select">
+                                            <option value="" class="align-middle text-center">--</option>
+                                            <?php $selecionado = $Escalas[$semana]['Domingo']['Manhã'][$pos] ?? null; ?>
+                                            <?php foreach ($coroinhas as $c): ?>
+                                                <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
+                                                    <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
+                                                    class="align-middle text-center">
+                                                    <?= $c->nomeCoroinha ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <td class="align-middle text-center">Noite</td>
+                                <?php for ($pos = 1; $pos <= 5; $pos++): ?>
+                                    <td>
+                                        <select name="escala[<?= $semana ?>][Domingo][Noite][<?= $pos ?>]" class="form-select">
+                                            <option value="" class="align-middle text-center">--</option>
+                                            <?php $selecionado = $Escalas[$semana]['Domingo']['Noite'][$pos] ?? null; ?>
+                                            <?php foreach ($coroinhas as $c): ?>
+                                                <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
+                                                    <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
+                                                    class="align-middle text-center">
+                                                    <?= $c->nomeCoroinha ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <td class="align-middle text-center"><?= $semana ?>º Segunda</td>
+                                <td class="align-middle text-center">Noite</td>
+                                <!-- coroinha -->
+                                <?php for ($pos = 1; $pos <= 2; $pos++): ?>
+                                    <td>
+                                        <select name="escala[<?= $semana ?>][Segunda][Noite][<?= $pos ?>]" class="form-select">
+                                            <option value="" class="align-middle text-center">Coroinha</option>
+                                            <?php
+                                            $selecionado = $Escalas[$semana]['Segunda']['Noite'][$pos] ?? null;
+                                            ?>
+                                            <?php foreach ($coroinhas as $c): ?>
+                                                <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
+                                                    <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
+                                                    class="align-middle text-center">
+                                                    <?= $c->nomeCoroinha ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                <?php endfor; ?>
+                                <!-- comunidade -->
+                                <td colspan="3">
+                                    <select name="comunidade[<?= $semana ?>]" class="form-select align-middle text-center">
+                                        <?php $comSel = $ComunidadesEscala[$semana] ?? null; ?>
+                                        <option value="">Selecionar comunidade</option>
+                                        <?php foreach ($comunidades as $com): ?>
+                                            <option value="<?= $com->idComunidade ?>" class="align-middle text-center"
+                                                <?= ($comSel == $com->idComunidade) ? 'selected' : '' ?>>
+                                                <?= $com->nomeComunidade ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
-                            <?php endfor; ?>
-                        </tr>
-                        <tr>
-                            <td class="align-middle text-center">Noite</td>
-                            <?php for ($pos = 1; $pos <= 5; $pos++): ?>
-                                <td>
-                                    <select name="escala[<?= $semana ?>][Domingo][Noite][<?= $pos ?>]" class="form-select">
-                                        <option value="" class="align-middle text-center">--</option>
-                                        <?php $selecionado = $Escalas[$semana]['Domingo']['Noite'][$pos] ?? null; ?>
-                                        <?php foreach ($coroinhas as $c): ?>
-                                            <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
-                                                <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
-                                                class="align-middle text-center">
-                                                <?= $c->nomeCoroinha ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </td>
-                            <?php endfor; ?>
-                        </tr>
-                        <tr>
-                            <td class="align-middle text-center"><?= $semana ?>º Segunda</td>
-                            <td class="align-middle text-center">Noite</td>
-                            <!-- coroinha -->
-                            <?php for ($pos = 1; $pos <= 2; $pos++): ?>
-                                <td>
-                                    <select name="escala[<?= $semana ?>][Segunda][Noite][<?= $pos ?>]" class="form-select">
-                                        <option value="" class="align-middle text-center">Coroinha</option>
-                                        <?php
-                                        $selecionado = $Escalas[$semana]['Segunda']['Noite'][$pos] ?? null;
-                                        ?>
-                                        <?php foreach ($coroinhas as $c): ?>
-                                            <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
-                                                <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
-                                                class="align-middle text-center">
-                                                <?= $c->nomeCoroinha ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </td>
-                            <?php endfor; ?>
-                            <!-- comunidade -->
-                            <td colspan="3">
-                                <select name="comunidade[<?= $semana ?>]" class="form-select align-middle text-center">
-                                    <?php $comSel = $ComunidadesEscala[$semana] ?? null; ?>
-                                    <option value="">Selecionar comunidade</option>
-                                    <?php foreach ($comunidades as $com): ?>
-                                        <option value="<?= $com->idComunidade ?>" class="align-middle text-center"
-                                            <?= ($comSel == $com->idComunidade) ? 'selected' : '' ?>>
-                                            <?= $com->nomeComunidade ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
-                        </tr>
-                    <?php endfor; ?>
-                </tbody>
-            </table>
+                            </tr>
+                        <?php endfor; ?>
+                    </tbody>
+                </table>
 
-            <div class="col-12 mt-3 mb-3 d-flex gap-2">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar"
-                    class="btn btn-outline-success">Salvar</button>
+                <div class="col-12 mt-3 mb-3 d-flex gap-2">
+                    <button type="submit" name="btnCadastrar" id="btnCadastrar"
+                        class="btn btn-outline-success">Salvar</button>
+                </div>
+                </table>
             </div>
-            </table>
         </form>
     </main>
 

@@ -1,5 +1,5 @@
-<footer class="footer-robusta">
+<footer class="footer-escala">
     <div class="footer-bottom">
-        <p>© 2026 Coroinhas Com. N. S. de Fátima • Todos os direitos reservados.</p>
+        <p>© 2026 TecDev • Todos os direitos reservados.</p>
     </div>
 </footer>

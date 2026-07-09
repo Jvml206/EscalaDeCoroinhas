@@ -155,3 +155,24 @@
     border-bottom: 3px solid var(--vermelho);
     padding-bottom: 6px;
 }
+
+.tabela-scroll{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+.tabela{
+    min-width:850px;
+}
+
+@media (max-width:768px){
+    .tabela{
+        min-width:720px;
+        font-size:13px;
+    }
+
+    .tabela th,
+    .tabela td{
+        padding:.35rem;
+    }
+}

@@ -25,6 +25,11 @@ $current = basename($_SERVER['PHP_SELF']);
           <a class="nav-link <?= $current === 'listaCoroinhas.php' ? 'active' : '' ?>"
             href="listaCoroinhas.php">Coroinhas/Acólitos</a>
         </li>
+        
+        <li class="nav-item">
+          <a class="nav-link <?= $current === 'infosCoroinhas.php' ? 'active' : '' ?>"
+            href="infosCoroinhas.php">Informações dos Coroinhas</a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link <?= $current === 'listaComunidades.php' ? 'active' : '' ?>"

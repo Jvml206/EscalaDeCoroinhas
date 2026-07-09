@@ -1,0 +1,35 @@
+@import url("baseSite.css");
+
+.card-modern {
+    height: 100%;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.card-modern h4 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.info {
+    margin-bottom: 7px;
+}
+
+.info strong {
+    display: inline-block;
+    min-width: 170px;
+}
+
+.status-filter {
+    max-width: 300px;
+    width: 100%;
+}
+
+.row > div:nth-child(4n + 1) .card-modern { background: rgba(250, 128, 114, 0.75); }
+.row > div:nth-child(4n + 2) .card-modern { background: rgba(173, 216, 230, 0.75); }
+.row > div:nth-child(4n + 3) .card-modern { background: rgba(211, 211, 211, 0.75); }
+.row > div:nth-child(4n) .card-modern { background: rgba(135, 206, 250, 0.75); }
