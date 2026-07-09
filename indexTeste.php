@@ -59,7 +59,7 @@ foreach ($comunidades as $com) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/index.css?v=<?php echo filemtime('CSS/index.css'); ?>">
+    <link rel="stylesheet" href="CSS/indexTeste.css?v=<?php echo filemtime('CSS/indexTeste.css'); ?>">
     <link rel="icon" href="Images/logo.png">
     <title>Escala Coroinhas</title>
 </head>
@@ -68,7 +68,7 @@ foreach ($comunidades as $com) {
     <?php require_once "_parts/_header.php"; ?>
     <main class="container my-3">
         <h1 class="h1-index">Escala Coroinhas Com. N. S. de Fátima</h1>
-        <div class="table-responsive tabela-scroll">
+        <div class="escala-desktop">
             <table class="table tabela overflow-hidden">
                 <thead class="table-success">
                     <tr>
@@ -129,6 +129,93 @@ foreach ($comunidades as $com) {
                     <?php endfor; ?>
                 </tbody>
             </table>
+        </div>
+
+        <div class="escala-mobile">
+            <!-- Escala Mobile -->
+            <div class="escala-mobile">
+                <?php for ($semana = 1; $semana <= 5; $semana++): ?>
+                    <!-- Domingo Manhã -->
+                    <div class="card-escala">
+                        <div class="card-header">
+                            <?= $semana ?>º Domingo - Manhã
+                        </div>
+                        <div class="card-body">
+                            <?php for ($pos = 1; $pos <= 5; $pos++): ?>
+                                <?php $id = $Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha'] ?? null; ?>
+                                <div class="linha">
+                                    <span class="numero"><?= $pos ?></span>
+                                    <?php $classe = '';
+                                    if ($id) {
+                                        $nivel = $coroinhasMap[$id]->nivel;
+                                        if ($nivel == "Nível 1") { $classe = 'nivel1';
+                                        } elseif ($nivel == "Nível 2") { $classe = 'nivel2';
+                                        } else { $classe = 'acolito';}
+                                    }?>
+                                    <span class="coroinha <?= $classe ?>">
+                                        <?= $id ? $coroinhasMap[$id]->nomeCoroinha: '--' ?>
+                                    </span>
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+
+                    <!-- Domingo Noite -->
+                    <div class="card-escala">
+                        <div class="card-header">
+                            <?= $semana ?>º Domingo - Noite
+                        </div>
+                        <div class="card-body">
+                            <?php for ($pos = 1; $pos <= 5; $pos++): ?>
+                                <?php $id = $Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha'] ?? null; ?>
+                                <div class="linha">
+                                    <span class="numero"><?= $pos ?></span>
+                                    <?php $classe = '';
+                                    if ($id) {
+                                        $nivel = $coroinhasMap[$id]->nivel;
+                                        if ($nivel == "Nível 1") { $classe = 'nivel1';
+                                        } elseif ($nivel == "Nível 2") { $classe = 'nivel2';
+                                        } else { $classe = 'acolito';}
+                                    }?>
+                                    <span class="coroinha <?= $classe ?>">
+                                        <?= $id ? $coroinhasMap[$id]->nomeCoroinha: '--' ?>
+                                    </span>
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+
+                    <!-- Segunda -->
+                    <div class="card-escala">
+                        <div class="card-header">
+                            <?= $semana ?>º Segunda - Noite
+                        </div>
+                        <div class="card-body">
+                            <?php for ($pos = 1; $pos <= 2; $pos++): ?>
+                                <?php
+                                $id = $Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha'] ?? null;
+                                if (!$id) continue;?>
+                                <div class="linha">
+                                    <span class="numero"><?= $pos ?></span>
+                                    <?php $classe = '';
+                                    if ($id) {
+                                        $nivel = $coroinhasMap[$id]->nivel;
+                                        if ($nivel == "Nível 1") { $classe = 'nivel1';
+                                        } elseif ($nivel == "Nível 2") { $classe = 'nivel2';
+                                        } else { $classe = 'acolito';}
+                                    }?>
+                                    <span class="coroinha <?= $classe ?>">
+                                        <?= $id ? $coroinhasMap[$id]->nomeCoroinha : '--' ?>
+                                    </span>
+                                </div>
+                            <?php endfor; ?>
+                            <hr>
+                            <strong>Comunidade</strong><br>
+                            <?= $EscalasCom[$semana]['Segunda']['Noite'][3]['comunidade'] ?? '--' ?>
+                        </div>
+                    </div>
+                <?php endfor; ?>
+            </div>
         </div>
     </main>
 

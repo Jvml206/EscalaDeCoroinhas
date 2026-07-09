@@ -22,7 +22,7 @@
             <thead>
                 <tr>
                     <th class="align-middle text-center">Nome</th>
-                    <th>Número de Vezes Servindo</th>
+                    <th class="text-center">Número de Vezes Servindo</th>
                     <th class="align-middle text-center">Status</th>
                 </tr>
             </thead>
@@ -37,7 +37,7 @@
                     ?>
                     <tr>
                         <td><?php echo $coroinha->nomeCoroinha ?></td>
-                        <td><?php echo $coroinha->numeroServindo ?></td>
+                        <td class="text-center"><?php echo $coroinha->numeroServindo ?></td>
                         <td><?php echo $coroinha->status ?></td>
                     </tr>
                 <?php endforeach; ?>

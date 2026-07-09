@@ -18,7 +18,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     if (empty($id)):
         //Tenta adicionar e exibe a mensagemao usuário
         if ($Comunidade->add()) {
-            echo "<script>window.alert('Cadastro de Comunidade realizado com sucesso.');window.location.href=Comunidade.php;</script>";
+            echo "<script>window.alert('Cadastro de Comunidade realizado com sucesso.');window.location.href=comunidade.php;</script>";
         } else {
             echo "<script>window.alert('Erro ao cadastrar a Comunidade.');window.open(document.referrer,'_self');</script>";
         }
@@ -72,7 +72,7 @@ endif;
 
         <h2 class="tituloPrincipal text-center mb-4">Cadastro de Comunidade</h2>
 
-        <form action="Comunidade.php" method="post" class="row g-3 mt-3">
+        <form action="comunidade.php" method="post" class="row g-3 mt-3">
 
             <input type="hidden" value="<?php echo $Comunidades->idComunidade ?? null; ?>" name="id">
 

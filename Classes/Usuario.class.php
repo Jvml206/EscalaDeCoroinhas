@@ -270,7 +270,7 @@ class Usuario extends CRUD
                     $mail->Port = $config['Port'];                            // ou 465 para 'ssl'
 
                     // Remetente e destinatário
-                    $mail->setFrom($config['Username'], 'Monitor Robusta');
+                    $mail->setFrom($config['Username'], 'Escala de Coroinhas N. S. de Fátima');
                     $mail->addAddress($email);
 
                     // Conteúdo

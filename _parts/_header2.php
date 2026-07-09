@@ -42,7 +42,7 @@ $current = basename($_SERVER['PHP_SELF']);
         </li>
       </ul>
 
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-lg-auto text-center text-lg-start">
         <?php if (isset($_SESSION['user_name'])): ?>
           <li class="nav-item dropdown">
             <!-- Usuário Logado -->

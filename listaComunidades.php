@@ -21,7 +21,7 @@ require_once "validaUser.php";
             <h3 class="tituloPrincipal">Comunidades</h3>
         </div>
         <div class="mt-3 mb-3">
-            <a href="comunidade.php" class="btn btn-outline-success">Novo comunidade</a>
+            <a href="comunidade.php" class="btn btn-outline-success">Nova comunidade</a>
         </div>
 
         <table class="tableaC dataTable">

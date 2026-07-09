@@ -20,6 +20,10 @@ $current = basename($_SERVER['PHP_SELF']);
         <li class="nav-item">
           <a class="nav-link <?= $current === 'index.php' ? 'active' : '' ?>" href="index.php">Escala</a>
         </li>
+        
+        <li class="nav-item">
+          <a class="nav-link <?= $current === 'indexTeste.php' ? 'active' : '' ?>" href="indexTeste.php">Escala Teste</a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link <?= $current === 'nivel1.php' ? 'active' : '' ?>" href="nivel1.php">Nível 1</a>
@@ -42,7 +46,7 @@ $current = basename($_SERVER['PHP_SELF']);
         </li>
       </ul>
 
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-lg-auto text-center text-lg-start">
         <?php
         if (session_status() === PHP_SESSION_NONE) {
           session_start();
