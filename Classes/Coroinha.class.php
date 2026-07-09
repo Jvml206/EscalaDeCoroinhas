@@ -153,4 +153,12 @@ class Coroinha extends CRUD
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function allInfos()
+    {
+        $sql = "SELECT * FROM $this->table ORDER BY nivel DESC, nomeCoroinha ASC"; // ordena por nível e depois por nome
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

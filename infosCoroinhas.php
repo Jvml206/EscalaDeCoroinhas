@@ -6,7 +6,7 @@ spl_autoload_register(function ($class) {
 });
 
 $coro = new Coroinha();
-$coroinhas = $coro->all();
+$coroinhas = $coro->allInfos();
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +46,14 @@ $coroinhas = $coro->all();
             <?php foreach ($coroinhas as $coroinha): ?>
                 <div class="col-xl-3 col-lg-4 col-md-6 card-coroinha"
                     data-status="<?= htmlspecialchars($coroinha->status) ?>">
-                    <div class="card-modern p-4">
+                    <?php
+                    $classeNivel = match ($coroinha->nivel) {
+                        'Nível 1' => 'nivel1CardInfos',
+                        'Nível 2' => 'nivel2CardInfos',
+                        'Acólito' => 'acolitoCardInfos',
+                        default => ''
+                    }; ?>
+                    <div class="card-infos p-4 <?= $classeNivel ?>">
                         <?php ?>
                         <h4><?= htmlspecialchars($coroinha->nomeCoroinha) ?></h4>
                         <div class="info">
@@ -89,7 +96,6 @@ $coroinhas = $coro->all();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="JS/infosCoro.js"></script>
-    <script src="JS/escalaIndex.js"></script>
 </body>
 
 </html>

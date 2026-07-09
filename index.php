@@ -51,6 +51,8 @@ $comunidadesMap = [];
 foreach ($comunidades as $com) {
     $comunidadesMap[$com->idComunidade] = $com;
 }
+
+require_once "Includes/functions.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -88,23 +90,23 @@ foreach ($comunidades as $com) {
                                 <?= $semana ?>º Domingo
                             </td>
                             <td>Manhã</td>
-                            <?php for ($pos = 1; $pos <= 5; $pos++): ?>
-                                <td
-                                    data-nivel="<?= $coroinhasMap[$Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha']]->nivel ?>">
-                                    <?= isset($Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha'])
-                                        ? $coroinhasMap[$Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha']]->nomeCoroinha
-                                        : '--' ?>
+                            <?php for ($pos = 1; $pos <= 5; $pos++):
+                                $id = $Escalas[$semana]['Domingo']['Manhã'][$pos]['coroinha'] ?? null;
+                                $classe = $id ? classeNivel($coroinhasMap[$id]->nivel) : ''; ?>
+
+                                <td class="<?= $classe ?>">
+                                    <?= $id ? $coroinhasMap[$id]->nomeCoroinha : '--' ?>
                                 </td>
                             <?php endfor; ?>
                         </tr>
                         <tr>
                             <td>Noite</td>
-                            <?php for ($pos = 1; $pos <= 5; $pos++): ?>
-                                <td
-                                    data-nivel="<?= $coroinhasMap[$Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha']]->nivel ?>">
-                                    <?= isset($Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha'])
-                                        ? $coroinhasMap[$Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha']]->nomeCoroinha
-                                        : '--' ?>
+                            <?php for ($pos = 1; $pos <= 5; $pos++):
+                                $id = $Escalas[$semana]['Domingo']['Noite'][$pos]['coroinha'] ?? null;
+                                $classe = $id ? classeNivel($coroinhasMap[$id]->nivel) : ''; ?>
+
+                                <td class="<?= $classe ?>">
+                                    <?= $id ? $coroinhasMap[$id]->nomeCoroinha : '--' ?>
                                 </td>
                             <?php endfor; ?>
                         </tr>
@@ -112,13 +114,13 @@ foreach ($comunidades as $com) {
                             <td><?= $semana ?>º Segunda</td>
                             <td>Noite</td>
                             <!-- coroinha -->
-                            <?php for ($pos = 1; $pos <= 2; $pos++): ?>
-                                <td data-nivel="<?= isset($Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha'])
-                                    ? $coroinhasMap[$Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha']]->nivel
-                                    : '' ?>">
-                                    <?= isset($Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha'])
-                                        ? $coroinhasMap[$Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha']]->nomeCoroinha
-                                        : '--' ?>
+                            <?php for ($pos = 1; $pos <= 2; $pos++):
+                                $id = $Escalas[$semana]['Segunda']['Noite'][$pos]['coroinha'] ?? null;
+                                $classe = $id ? classeNivel($coroinhasMap[$id]->nivel) : '';
+                                ?>
+
+                                <td class="<?= $classe ?>">
+                                    <?= $id ? $coroinhasMap[$id]->nomeCoroinha : '--' ?>
                                 </td>
                             <?php endfor; ?>
                             <!-- comunidade -->
@@ -136,7 +138,6 @@ foreach ($comunidades as $com) {
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="JS/escalaIndex.js"></script>
 </body>
 
 </html>
