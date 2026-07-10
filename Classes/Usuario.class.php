@@ -120,6 +120,7 @@ class Usuario extends CRUD
     {
         $sql = "SELECT u.*, CASE 
             WHEN u.nivelAcessoUsuario = 1 THEN 'Admin'
+            WHEN u.nivelAcessoUsuario <> 1 THEN u.nomeUsuario
         END AS nome FROM  $this->table u
          WHERE emailUsuario = :emailUsuario";
         $stmt = $this->db->prepare($sql);
