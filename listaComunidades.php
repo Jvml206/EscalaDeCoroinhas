@@ -24,49 +24,56 @@ require_once "validaUser.php";
         <div class="mt-3 mb-3">
             <a href="comunidade.php" class="btn btn-outline-success">Nova comunidade</a>
         </div>
-
-        <table class="tableaC dataTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th class="text-center">Nome</th>
-                    <th class="text-center">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                spl_autoload_register(function ($class) {
-                    require_once "Classes/{$class}.class.php";
-                });
-                $c = new Comunidade();
-                $Comunidades = $c->all();
-                foreach ($Comunidades as $comunidade):
-                    ?>
+        
+        <div class="table-responsive tabela-scroll">
+            <table class="tableaC dataTable">
+                <thead>
                     <tr>
-                        <td><?php echo $comunidade->idComunidade ?></td>
-                        <td><?php echo $comunidade->nomeComunidade ?></td>
-                        <td class="text-center d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("comunidade.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $comunidade->idComunidade ?>">
-                                <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja editar a comunidade?');">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </form>
-                            <?php if ($usuario->verificarNivelAcesso([1])): ?>
-                                <form action="<?php echo htmlspecialchars("comunidade.php") ?>" method="post" class="d-flex">
-                                    <input type="hidden" name="id" value="<?php echo $comunidade->idComunidade ?>">
-                                    <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
-                                        onclick="return confirm('Tem certeza que deseja deletar a comunidade?')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            <?php endif; ?>
-                        </td>
+                        <th>#</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Ações</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    spl_autoload_register(function ($class) {
+                        require_once "Classes/{$class}.class.php";
+                    });
+                    $c = new Comunidade();
+                    $Comunidades = $c->all();
+                    foreach ($Comunidades as $comunidade):
+                        ?>
+                        <tr>
+                            <td><?php echo $comunidade->idComunidade ?></td>
+                            <td><?php echo $comunidade->nomeComunidade ?></td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form action="<?php echo htmlspecialchars("comunidade.php") ?>" method="post"
+                                        class="d-flex">
+                                        <input type="hidden" name="id" value="<?php echo $comunidade->idComunidade ?>">
+                                        <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm" type="submit"
+                                            onclick="return confirm('Tem certeza que deseja editar a comunidade?');">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </form>
+                                    <?php if ($usuario->verificarNivelAcesso([1])): ?>
+                                        <form action="<?php echo htmlspecialchars("comunidade.php") ?>" method="post"
+                                            class="d-flex">
+                                            <input type="hidden" name="id" value="<?php echo $comunidade->idComunidade ?>">
+                                            <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm"
+                                                type="submit"
+                                                onclick="return confirm('Tem certeza que deseja deletar a comunidade?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer">

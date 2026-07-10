@@ -218,6 +218,7 @@ class Usuario extends CRUD
                     $config = parse_ini_file(__DIR__ . '/../config.ini', true)['email'];
                     // Configurações do servidor
                     $mail->isSMTP();
+                    $mail->CharSet = 'UTF-8';
                     $mail->Host = $config['Host'];
                     $mail->SMTPAuth = $config['SMTPAuth'];
                     $mail->Username = $config['Username'];

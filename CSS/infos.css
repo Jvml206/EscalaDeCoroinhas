@@ -7,6 +7,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform .2s ease, box-shadow .2s ease;
+    position: relative;
 }
 
 .card-infos:hover {
@@ -50,4 +51,38 @@
 .card-infos.acolitoCardInfos {
     background: rgba(32, 30, 30, 0.25);
     border-left-color: #424242;
+}
+
+.icone-card {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    color: #e53935;
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: .2s;
+}
+
+.icone-card:hover {
+    color: #0d6efd;
+    transform: scale(1.1);
+}
+
+.obs {
+    color: #373737;
+    display: inline-block;
+    min-width: 170px;
+}
+
+.lista-observacoes {
+    display: inline-block;
+    margin: 0 0 0 6px;
+    padding-left: 18px;
+    vertical-align: top;
+}
+
+.lista-observacoes li {
+    margin: 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }

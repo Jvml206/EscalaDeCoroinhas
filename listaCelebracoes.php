@@ -25,60 +25,67 @@ require_once "validaUser.php";
             <a href="celebracao.php" class="btn btn-outline-success">Nova celebração</a>
         </div>
 
-        <table class="tableaCe dataTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th class="text-center">Comunidade</th>
-                    <th class="text-center">Semana/Dia</th>
-                    <th class="text-center">Turno</th>
-                    <th class="text-center">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                spl_autoload_register(function ($class) {
-                    require_once "Classes/{$class}.class.php";
-                });
-                $c = new Celebracao();
-                $Celebracoes = $c->all();
-
-                $Comunidade = new Comunidade();
-                $comunidade = $Comunidade->all();
-                foreach ($Celebracoes as $celebracao):
-                    ?>
+        <div class="table-responsive tabela-scroll">
+            <table class="tableaCe dataTable">
+                <thead>
                     <tr>
-                        <td><?php echo $celebracao->idCelebracao ?></td>
-                        <td><?php foreach ($comunidade as $c) {
-                            if ($c->idComunidade == $celebracao->idComunidadeFK) {
-                                echo $c->nomeComunidade;
-                                break;
-                            }
-                        } ?></t>
-                        <td><?php echo $celebracao->semana ?>     <?php echo $celebracao->diaSemana ?></td>
-                        <td><?php echo $celebracao->turno ?></td>
-                        <td class="text-center d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("celebracao.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $celebracao->idCelebracao ?>">
-                                <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja editar a celebração?');">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </form>
-                            <?php if ($usuario->verificarNivelAcesso([1])): ?>
-                                <form action="<?php echo htmlspecialchars("celebracao.php") ?>" method="post" class="d-flex">
-                                    <input type="hidden" name="id" value="<?php echo $celebracao->idCelebracao ?>">
-                                    <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
-                                        onclick="return confirm('Tem certeza que deseja deletar a celebração?')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            <?php endif; ?>
-                        </td>
+                        <th>#</th>
+                        <th class="text-center">Comunidade</th>
+                        <th class="text-center">Semana/Dia</th>
+                        <th class="text-center">Turno</th>
+                        <th class="text-center">Ações</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    spl_autoload_register(function ($class) {
+                        require_once "Classes/{$class}.class.php";
+                    });
+                    $c = new Celebracao();
+                    $Celebracoes = $c->all();
+
+                    $Comunidade = new Comunidade();
+                    $comunidade = $Comunidade->all();
+                    foreach ($Celebracoes as $celebracao):
+                        ?>
+                        <tr>
+                            <td><?php echo $celebracao->idCelebracao ?></td>
+                            <td><?php foreach ($comunidade as $c) {
+                                if ($c->idComunidade == $celebracao->idComunidadeFK) {
+                                    echo $c->nomeComunidade;
+                                    break;
+                                }
+                            } ?></t>
+                            <td><?php echo $celebracao->semana ?>     <?php echo $celebracao->diaSemana ?></td>
+                            <td><?php echo $celebracao->turno ?></td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form action="<?php echo htmlspecialchars("celebracao.php") ?>" method="post"
+                                        class="d-flex">
+                                        <input type="hidden" name="id" value="<?php echo $celebracao->idCelebracao ?>">
+                                        <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm" type="submit"
+                                            onclick="return confirm('Tem certeza que deseja editar a celebração?');">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </form>
+                                    <?php if ($usuario->verificarNivelAcesso([1])): ?>
+                                        <form action="<?php echo htmlspecialchars("celebracao.php") ?>" method="post"
+                                            class="d-flex">
+                                            <input type="hidden" name="id" value="<?php echo $celebracao->idCelebracao ?>">
+                                            <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm"
+                                                type="submit"
+                                                onclick="return confirm('Tem certeza que deseja deletar a celebração?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer">

@@ -15,12 +15,11 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
     $usuario->setNomeUsuario(filter_input(INPUT_POST, "nomeUsuario", FILTER_SANITIZE_STRING));
     $usuario->setEmailUsuario(filter_input(INPUT_POST, "emailUsuario", FILTER_SANITIZE_STRING));
-    $usuario->setSenhaUsuario("senhaTemporaria"); // Defina uma senha temporária ou gere uma senha aleatória
+    $usuario->setSenhaUsuario("senhaTemporaria");
     $usuario->setNivelAcessoUsuario(filter_input(INPUT_POST, "nivelAcessoUsuario", FILTER_SANITIZE_NUMBER_INT));
 
     $id = filter_input(INPUT_POST, 'id');
     if (empty($id)):
-        //Tenta adicionar e exibe a mensagemao usuário
         if ($usuario->add()) {
             echo "<script>window.alert('Cadastro de Usuário realizado com sucesso.');window.location.href=usuario.php;</script>";
         } else {
@@ -28,8 +27,6 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
         }
     else:
         if ($usuario->update('idUsuario', $id)) {
-            echo "<script>window.alert('Usuário alterado com sucesso.'); 
-            window.location.href='usuario.php';</script>";
         } else {
             echo "<script> window.alert('Erro ao alterar o Usuário.');
             window.open(document.referrer, '_self'); </script>";
@@ -38,11 +35,6 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     $id = intval(filter_input(INPUT_POST, "id"));
     $delUsuario = $usuario->search("idUsuario", $id);
-
-    $fotoApagar = "Images/Usuario/" . $delUsuario->foto;
-    if (!empty($delUsuario->foto) && is_file($fotoApagar)) {
-        unlink($fotoApagar);
-    }
 
     if ($usuario->delete("idUsuario", $id)) {
         header("location:usuario.php");
@@ -90,13 +82,14 @@ endif;
 
             <div class="col-md-4 mb-3">
                 <label for="emailUsuario" class="form-label">Email</label>
-                <input type="email" name="emailUsuario" id="emailUsuario" placeholder="Digite o Email do Usuário" required
-                    class="form-control" value="<?php echo $Usuarios->emailUsuario ?? null; ?>">
+                <input type="email" name="emailUsuario" id="emailUsuario" placeholder="Digite o Email do Usuário"
+                    required class="form-control" value="<?php echo $Usuarios->emailUsuario ?? null; ?>">
             </div>
 
             <div class="col-4">
                 <label for="nivelDeAcessoUsuario" class="form-label">Nível de Acesso</label>
-                <select name="nivelAcessoUsuario" class="form-select" aria-label="Default select example" id="nivelDeAcessoUsuario" required>
+                <select name="nivelAcessoUsuario" class="form-select" aria-label="Default select example"
+                    id="nivelDeAcessoUsuario" required>
                     <option disabled <?= (!isset($Usuarios->nivelAcessoUsuario)) ? 'selected' : '' ?>>Selecione o Nível
                     </option>
                     <option value="1" <?= (isset($Usuarios->nivelAcessoUsuario) && $Usuarios->nivelAcessoUsuario == 1) ? 'selected' : '' ?>>Administrador</option>
@@ -110,47 +103,55 @@ endif;
                     class="btn btn-outline-success">Salvar</button>
             </div>
         </form>
-
-        <table class="tableaCe">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th class="text-center">Nome</th>
-                    <th class="text-center">Email</th>
-                    <th class="text-center">Nível de Acesso</th>
-                    <th class="text-center">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $usu = $usuario->all();
-                foreach ($usu as $users):
-                    ?>
+        
+        <div class="table-responsive tabela-scroll">
+            <table class="tableaCe">
+                <thead>
                     <tr>
-                        <td><?php echo $users->idUsuario ?></td>
-                        <td><?php echo $users->nomeUsuario ?></td>
-                        <td><?php echo $users->emailUsuario ?></td>
-                        <td><?php echo $users->nivelAcessoUsuario ?></td>
-                        <td class="text-center d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $users->idUsuario ?>">
-                                <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm" type="submit">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </form>
-                            <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $users->idUsuario ?>">
-                                <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja deletar o usuário?')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th>#</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Nível de Acesso</th>
+                        <th class="text-center">Ações</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    $usu = $usuario->all();
+                    foreach ($usu as $users):
+                        ?>
+                        <tr>
+                            <td><?php echo $users->idUsuario ?></td>
+                            <td><?php echo $users->nomeUsuario ?></td>
+                            <td><?php echo $users->emailUsuario ?></td>
+                            <td><?php echo $users->nivelAcessoUsuario ?></td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post"
+                                        class="d-flex">
+                                        <input type="hidden" name="id" value="<?php echo $users->idUsuario ?>">
+                                        <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm"
+                                            type="submit">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </form>
 
+                                    <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post"
+                                        class="d-flex">
+                                        <input type="hidden" name="id" value="<?php echo $users->idUsuario ?>">
+                                        <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm"
+                                            type="submit"
+                                            onclick="return confirm('Tem certeza que deseja deletar o usuário?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer">

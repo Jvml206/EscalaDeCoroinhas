@@ -26,52 +26,59 @@ require_once "validaUser.php";
             <a href="coroinha.php" class="btn btn-outline-success">Novo Coroinha</a>
         </div>
 
-        <table class="tableaCor dataTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th class="text-center">Nome</th>
-                    <th class="text-center">Nível</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                spl_autoload_register(function ($class) {
-                    require_once "Classes/{$class}.class.php";
-                });
-                $c = new Coroinha();
-                $Coroinhas = $c->all();
-                foreach ($Coroinhas as $coroinha):
-                    ?>
+        <div class="table-responsive tabela-scroll">
+            <table class="tableaCor dataTable">
+                <thead>
                     <tr>
-                        <td><?php echo $coroinha->idCoroinha ?></td>
-                        <td><?php echo $coroinha->nomeCoroinha ?></td>
-                        <td><?php echo $coroinha->nivel ?></td>
-                        <td><?php echo $coroinha->status ?></td>
-                        <td class="text-center d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("coroinha.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $coroinha->idCoroinha ?>">
-                                <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja editar o coroinha?');">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </form>
-                            <?php if ($usuario->verificarNivelAcesso([1])): ?>
-                                <form action="<?php echo htmlspecialchars("coroinha.php") ?>" method="post" class="d-flex">
-                                    <input type="hidden" name="id" value="<?php echo $coroinha->idCoroinha ?>">
-                                    <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
-                                        onclick="return confirm('Tem certeza que deseja deletar o coroinha?')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            <?php endif; ?>
-                        </td>
+                        <th>#</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Nível</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Ações</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    spl_autoload_register(function ($class) {
+                        require_once "Classes/{$class}.class.php";
+                    });
+                    $c = new Coroinha();
+                    $Coroinhas = $c->all();
+                    foreach ($Coroinhas as $coroinha):
+                        ?>
+                        <tr>
+                            <td><?php echo $coroinha->idCoroinha ?></td>
+                            <td><?php echo $coroinha->nomeCoroinha ?></td>
+                            <td><?php echo $coroinha->nivel ?></td>
+                            <td><?php echo $coroinha->status ?></td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form action="<?php echo htmlspecialchars("coroinha.php") ?>" method="post"
+                                        class="d-flex">
+                                        <input type="hidden" name="id" value="<?php echo $coroinha->idCoroinha ?>">
+                                        <button title="Editar" name="btnEditar" class="btn btn-primary btn-sm" type="submit"
+                                            onclick="return confirm('Tem certeza que deseja editar o coroinha?');">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </form>
+                                    <?php if ($usuario->verificarNivelAcesso([1])): ?>
+                                        <form action="<?php echo htmlspecialchars("coroinha.php") ?>" method="post"
+                                            class="d-flex">
+                                            <input type="hidden" name="id" value="<?php echo $coroinha->idCoroinha ?>">
+                                            <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm"
+                                                type="submit"
+                                                onclick="return confirm('Tem certeza que deseja deletar o coroinha?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer">

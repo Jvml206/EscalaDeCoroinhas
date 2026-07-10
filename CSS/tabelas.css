@@ -267,3 +267,9 @@
 .tableaCe td {
     vertical-align: middle;
 }
+
+.observacaoDado {
+    margin: 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}

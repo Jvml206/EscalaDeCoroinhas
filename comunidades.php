@@ -18,27 +18,29 @@
             <h3 class="tituloPrincipal">Comunidades</h3>
         </div>
 
-        <table class="tableaC dataTable">
-            <thead>
-                <tr>
-                    <th class="align-middle text-center">Nome da Comunidade</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                spl_autoload_register(function ($class) {
-                    require_once "Classes/{$class}.class.php";
-                });
-                $c = new Comunidade();
-                $Comunidades = $c->all();
-                foreach ($Comunidades as $comunidade):
-                    ?>
-                    <tr>    
-                        <td><?php echo $comunidade->nomeComunidade ?></td>
+        <div class="table-responsive tabela-scroll">
+            <table class="tableaC dataTable">
+                <thead>
+                    <tr>
+                        <th class="align-middle text-center">Nome da Comunidade</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    spl_autoload_register(function ($class) {
+                        require_once "Classes/{$class}.class.php";
+                    });
+                    $c = new Comunidade();
+                    $Comunidades = $c->all();
+                    foreach ($Comunidades as $comunidade):
+                        ?>
+                        <tr>
+                            <td><?php echo $comunidade->nomeComunidade ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer">

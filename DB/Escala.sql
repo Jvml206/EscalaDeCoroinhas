@@ -26,8 +26,9 @@ CREATE TABLE IF NOT EXISTS Coroinha (
 DROP TABLE IF EXISTS Observacao;
 CREATE TABLE IF NOT EXISTS Observacao (
     idObservacao INT AUTO_INCREMENT PRIMARY KEY,
-    idCoroinhaFK INT,
-    observacao TEXT NOT NULL
+    idCoroinhaFK INT NOT NULL,
+    observacao TEXT NOT NULL,
+    status ENUM('Em observação', 'Corrigida') DEFAULT ("Em observação")
 );
 
 DROP TABLE IF EXISTS Comunidade;

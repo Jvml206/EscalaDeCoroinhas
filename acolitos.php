@@ -18,31 +18,33 @@
             <h3 class="tituloPrincipal">Acólitos</h3>
         </div>
 
-        <table class="tableaA dataTable">
-            <thead>
-                <tr>
-                    <th class="align-middle text-center">Nome</th>
-                    <th class="text-center">Número de Vezes Servindo</th>
-                    <th class="align-middle text-center">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                spl_autoload_register(function ($class) {
-                    require_once "Classes/{$class}.class.php";
-                });
-                $c = new Coroinha();
-                $Coroinhas = $c->searchStr("nivel", "Acólito");
-                foreach ($Coroinhas as $coroinha):
-                    ?>
-                    <tr>    
-                        <td><?php echo $coroinha->nomeCoroinha ?></td>
-                        <td class="text-center"><?php echo $coroinha->numeroServindo ?></td>
-                        <td><?php echo $coroinha->status ?></td>
+        <div class="table-responsive tabela-scroll">
+            <table class="tableaA dataTable">
+                <thead>
+                    <tr>
+                        <th class="align-middle text-center">Nome</th>
+                        <th class="text-center">Número de Vezes Servindo</th>
+                        <th class="align-middle text-center">Status</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    spl_autoload_register(function ($class) {
+                        require_once "Classes/{$class}.class.php";
+                    });
+                    $c = new Coroinha();
+                    $Coroinhas = $c->searchStr("nivel", "Acólito");
+                    foreach ($Coroinhas as $coroinha):
+                        ?>
+                        <tr>
+                            <td><?php echo $coroinha->nomeCoroinha ?></td>
+                            <td class="text-center"><?php echo $coroinha->numeroServindo ?></td>
+                            <td><?php echo $coroinha->status ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer">

@@ -8,6 +8,7 @@ spl_autoload_register(function ($class) {
 
 $coro = new Coroinha();
 $coroinhas = $coro->allInfos();
+$observacao = new Observacao();
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +56,10 @@ $coroinhas = $coro->allInfos();
                         default => ''
                     }; ?>
                     <div class="card-infos p-4 <?= $classeNivel ?>">
+                        <a href="observacaoCoroinha.php?idCoroinhaFK=<?= $coroinha->idCoroinha ?>" class="icone-card">
+                            <i class="bi bi-card-text"></i>
+                        </a>
+
                         <?php ?>
                         <h4><?= htmlspecialchars($coroinha->nomeCoroinha) ?></h4>
                         <div class="info">
@@ -82,8 +87,25 @@ $coroinhas = $coro->allInfos();
                             <?= htmlspecialchars($coroinha->numeroServindo) ?>
                         </div>
                         <div class="info">
-                            <strong>Obs.:</strong>
-                            <?= ''; //htmlspecialchars($coroinha->observacoes) ?>
+                            <strong class="obs">Obs.:</strong>
+                            <?php
+                            $observacoes = $observacao->getByCoroinha($coroinha->idCoroinha);
+                            if (!empty($observacoes)):
+                                ?>
+                                <ul class="lista-observacoes">
+                                    <?php foreach ($observacoes as $obs): ?>
+                                        <li class="obs-item">
+                                            <?php if ($obs->status === 'Corrigida'): ?>
+                                                <s><?= htmlspecialchars($obs->observacao) ?></s>
+                                            <?php else: ?>
+                                                <?= htmlspecialchars($obs->observacao) ?>
+                                            <?php endif; ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else: ?>
+                                Nenhuma observação.
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
