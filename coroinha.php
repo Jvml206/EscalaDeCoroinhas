@@ -1,4 +1,5 @@
 <?php
+$nivelPermitidos = [1, 2];
 require_once "validaUser.php";
 
 if (session_status() === PHP_SESSION_NONE) {

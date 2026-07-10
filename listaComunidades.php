@@ -1,4 +1,5 @@
 <?php
+$nivelPermitidos = [1, 2];
 require_once "validaUser.php";
 ?>
 <!DOCTYPE html>
@@ -52,13 +53,15 @@ require_once "validaUser.php";
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </form>
-                            <form action="<?php echo htmlspecialchars("comunidade.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $comunidade->idComunidade ?>">
-                                <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja deletar a comunidade?')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            <?php if ($usuario->verificarNivelAcesso([1])): ?>
+                                <form action="<?php echo htmlspecialchars("comunidade.php") ?>" method="post" class="d-flex">
+                                    <input type="hidden" name="id" value="<?php echo $comunidade->idComunidade ?>">
+                                    <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
+                                        onclick="return confirm('Tem certeza que deseja deletar a comunidade?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

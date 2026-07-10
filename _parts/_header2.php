@@ -17,34 +17,52 @@ $current = basename($_SERVER['PHP_SELF']);
 
       <ul class="navbar-nav main-menu ms-auto">
 
-        <li class="nav-item">
-          <a class="nav-link <?= $current === 'index.php' ? 'active' : '' ?>" href="index.php">Index</a>
-        </li>
+        <?php if ($usuario->verificarNivelAcesso([1, 2, 3])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'index.php' ? 'active' : '' ?>" href="index.php">Index</a>
+          </li>
+        <?php endif; ?>
 
-        <li class="nav-item">
-          <a class="nav-link <?= $current === 'listaCoroinhas.php' ? 'active' : '' ?>"
-            href="listaCoroinhas.php">Coroinhas/Acólitos</a>
-        </li>
-        
-        <li class="nav-item">
-          <a class="nav-link <?= $current === 'infosCoroinhas.php' ? 'active' : '' ?>"
-            href="infosCoroinhas.php">Informações dos Coroinhas</a>
-        </li>
+        <?php if ($usuario->verificarNivelAcesso([1, 2])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'listaCoroinhas.php' ? 'active' : '' ?>"
+              href="listaCoroinhas.php">Coroinhas/Acólitos</a>
+          </li>
+        <?php endif; ?>
 
-        <li class="nav-item">
-          <a class="nav-link <?= $current === 'listaComunidades.php' ? 'active' : '' ?>"
-            href="listaComunidades.php">Comunidades</a>
-        </li>
+        <?php if ($usuario->verificarNivelAcesso([1, 2])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'infosCoroinhas.php' ? 'active' : '' ?>"
+              href="infosCoroinhas.php">Informações dos Coroinhas</a>
+          </li>
+        <?php endif; ?>
 
-        <li class="nav-item">
-          <a class="nav-link <?= $current === 'listaCelebracoes.php' ? 'active' : '' ?>"
-            href="listaCelebracoes.php">Celebrações</a>
-        </li>
+        <?php if ($usuario->verificarNivelAcesso([1])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'usuario.php' ? 'active' : '' ?>"
+              href="usuario.php">Usuários</a>
+          </li>
+        <?php endif; ?>
 
-        <li class="nav-item">
-          <a class="nav-link <?= $current === 'escala.php' ? 'active' : '' ?>"
-            href="escala.php">Escala</a>
-        </li>
+        <?php if ($usuario->verificarNivelAcesso([1, 2])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'listaComunidades.php' ? 'active' : '' ?>"
+              href="listaComunidades.php">Comunidades</a>
+          </li>
+        <?php endif; ?>
+
+        <?php if ($usuario->verificarNivelAcesso([1, 2])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'listaCelebracoes.php' ? 'active' : '' ?>"
+              href="listaCelebracoes.php">Celebrações</a>
+          </li>
+        <?php endif; ?>
+
+        <?php if ($usuario->verificarNivelAcesso([1])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'escala.php' ? 'active' : '' ?>" href="escala.php">Escala</a>
+          </li>
+        <?php endif; ?>
       </ul>
 
       <ul class="navbar-nav ms-lg-auto text-center text-lg-start">

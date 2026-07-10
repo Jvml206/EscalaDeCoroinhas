@@ -12,6 +12,7 @@ class Usuario extends CRUD
 
     protected $table = "Usuario";
     private $idUsuario;
+    private $nomeUsuario;
     private $emailUsuario;
     private $senhaUsuario;
     private $nivelAcessoUsuario;
@@ -24,6 +25,16 @@ class Usuario extends CRUD
     public function setIdUsuario($idUsuario)
     {
         $this->idUsuario = $idUsuario;
+    }
+
+    public function getNomeUsuario()
+    {
+        return $this->nomeUsuario;
+    }
+
+    public function setNomeUsuario($nomeUsuario)
+    {
+        $this->nomeUsuario = $nomeUsuario;
     }
 
     public function getEmailUsuario()
@@ -59,11 +70,12 @@ class Usuario extends CRUD
     //Adiciona um usuário
     public function add()
     {
-        $sql = "INSERT INTO $this->table (emailUsuario, senhaUsuario, nivelAcessoUsuario) 
-            VALUES (:emailUsuario, :senhaUsuario, :nivelAcessoUsuario)";
+        $sql = "INSERT INTO $this->table (nomeUsuario, emailUsuario, senhaUsuario, nivelAcessoUsuario) 
+            VALUES (:nomeUsuario, :emailUsuario, :senhaUsuario, :nivelAcessoUsuario)";
         $stmt = $this->db->prepare($sql);
 
         try {
+            $stmt->bindParam(':nomeUsuario', $this->nomeUsuario, PDO::PARAM_STR);
             $stmt->bindParam(':emailUsuario', $this->emailUsuario, PDO::PARAM_STR);
             $stmt->bindParam(':senhaUsuario', $this->senhaUsuario, PDO::PARAM_STR);
             $stmt->bindParam(':nivelAcessoUsuario', $this->nivelAcessoUsuario, PDO::PARAM_INT);
@@ -87,13 +99,13 @@ class Usuario extends CRUD
     public function update($campo, $id)
     {
         $sql = "UPDATE $this->table 
-                  SET  emailUsuario = :emailUsuario, senhaUsuario = :senhaUsuario, nivelAcessoUsuario = :nivelAcessoUsuario
+                  SET  nomeUsuario = :nomeUsuario, emailUsuario = :emailUsuario, nivelAcessoUsuario = :nivelAcessoUsuario
                   WHERE $campo = :idUsuario";
         $stmt = $this->db->prepare($sql);
 
         try {
+            $stmt->bindParam(':nomeUsuario', $this->nomeUsuario, PDO::PARAM_STR);
             $stmt->bindParam(':emailUsuario', $this->emailUsuario, PDO::PARAM_STR);
-            $stmt->bindParam(':senhaUsuario', $this->senhaUsuario, PDO::PARAM_STR);
             $stmt->bindParam(':nivelAcessoUsuario', $this->nivelAcessoUsuario, PDO::PARAM_INT);
             $stmt->bindParam(':idUsuario', $id, PDO::PARAM_INT);
             return $stmt->execute();
@@ -162,63 +174,6 @@ class Usuario extends CRUD
         return false; // Usuário não tem permissão
 
     }
-
-    public function atualizarEmail($nomeUsuario, $email, $senhaAtual)
-    {
-
-        try {
-            // Verifica se a senha atual está correta
-            $sql = "SELECT senhaUsuario FROM $this->table WHERE nomeUsuario = :nomeUsuario";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':nomeUsuario', $nomeUsuario);
-            $stmt->execute();
-            $usuario = $stmt->fetch(PDO::FETCH_OBJ);
-            if (password_verify($senhaAtual, $usuario->senhaUsuario)) {
-                // Atualiza o e-mail
-                $sql = "UPDATE $this->table SET emailUsuario = :emailUsuario WHERE nomeUsuario = :nomeUsuario";
-                $stmt = $this->db->prepare($sql);
-                $stmt->bindParam(':emailUsuario', $email, PDO::PARAM_STR);
-                $stmt->bindParam(':nomeUsuario', $nomeUsuario);
-
-                return $stmt->execute();
-            } else {
-
-                return false; // Senha inválida
-            }
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public function alterarSenha($nomeUsuario, $senhaAtual, $novaSenha)
-    {
-        try {
-            // Verifica se a senha atual está correta
-            $query = "SELECT senhaUsuario FROM $this->table WHERE nomeUsuario = :nomeUsuario";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':nomeUsuario', $nomeUsuario, PDO::PARAM_STR);
-            $stmt->execute();
-
-            $usuario = $stmt->fetch(PDO::FETCH_OBJ);
-
-            if ($usuario && password_verify($senhaAtual, $usuario->senhaUsuario)) {
-                // Atualiza com a nova senha (hash)
-                $novaSenhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
-                $query = "UPDATE $this->table SET senhaUsuario = :novaSenha WHERE nomeUsuario = :nomeUsuario";
-                $stmt = $this->db->prepare($query);
-                $stmt->bindParam(':novaSenha', $novaSenhaHash, PDO::PARAM_STR);
-                $stmt->bindParam(':nomeUsuario', $nomeUsuario, PDO::PARAM_STR);
-
-                return $stmt->execute();
-            } else {
-                return false; // Senha atual incorreta
-            }
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-
 
     public function solicitarRecuperacaoSenha($email, $mensagem = null, $assunto = null)
     {

@@ -180,7 +180,7 @@
 }
 
 /* Tabela Geral Coroinhas */
-.tableaG {
+.tableaCor {
     width: 100%;
     border-collapse: separate; 
     border-spacing: 0;          
@@ -192,34 +192,34 @@
     overflow: hidden;           
 }
 
-.tableaG thead {
+.tableaCor thead {
     background-color: #ff6666;
     color: #fff;
     font-weight: bold;
 }
 
-.tableaG thead tr:first-child th:first-child {
+.tableaCor thead tr:first-child th:first-child {
     border-top-left-radius: 12px;
 }
-.tableaG thead tr:first-child th:last-child {
+.tableaCor thead tr:first-child th:last-child {
     border-top-right-radius: 12px;
 }
 
-.tableaG th, .tableaG td {
+.tableaCor th, .tableaCor td {
     padding: 10px 15px;
     text-align: center;
     border: 1px solid #ddd;
 }
 
-.tableaG tbody tr:nth-child(even) {
+.tableaCor tbody tr:nth-child(even) {
     background-color: #ffe6e6;
 }
 
-.tableaG tbody tr:hover {
+.tableaCor tbody tr:hover {
     background-color: #ff9999;
 }
 
-.tableaG td {
+.tableaCor td {
     vertical-align: middle;
 }
 

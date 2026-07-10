@@ -23,3 +23,11 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php?error=not_logged_in");
     exit;
 }
+
+if(isset($nivelPermitidos)){
+    if (!$usuario->verificarNivelAcesso($nivelPermitidos)) {
+        // Redireciona para a página de login ou exibe mensagem de erro
+        echo "<script>window.alert('Usuário não tem nível de acesso necessário.'); window.location.href='dashboard.php';</script>";
+        exit();
+    }
+}

@@ -4,9 +4,10 @@ USE escala_coroinhas;
 DROP TABLE IF EXISTS Usuario;
 CREATE TABLE IF NOT EXISTS Usuario (
     idUsuario INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nomeUsuario VARCHAR(255) NOT NULL,
     emailUsuario VARCHAR(100) NOT NULL UNIQUE,
     senhaUsuario VARCHAR(255) NOT NULL,
-    nivelAcessoUsuario INT(11) NOT NULL
+    nivelAcessoUsuario ENUM('1', '2', '3') NOT NULL # 1 - ADMIN ; 2 - COORDENADOR ; 3 - COORDENADOR DE OUTRA COM.
 );
 
 DROP TABLE IF EXISTS Coroinha;
@@ -20,6 +21,13 @@ CREATE TABLE IF NOT EXISTS Coroinha (
     podeSegunda ENUM('Sim','Não') NOT NULL,
     foto VARCHAR(500) NOT NULL,
     numeroServindo INT DEFAULT 0
+);
+
+DROP TABLE IF EXISTS Observacao;
+CREATE TABLE IF NOT EXISTS Observacao (
+    idObservacao INT AUTO_INCREMENT PRIMARY KEY,
+    idCoroinhaFK INT,
+    observacao TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS Comunidade;
@@ -90,4 +98,4 @@ BEGIN
 END$$
 DELIMITER ;
 
-select * from coroinha;
+select * from escala;

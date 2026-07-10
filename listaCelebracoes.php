@@ -1,4 +1,5 @@
 <?php
+$nivelPermitidos = [1, 2];
 require_once "validaUser.php";
 ?>
 <!DOCTYPE html>
@@ -54,7 +55,7 @@ require_once "validaUser.php";
                                 break;
                             }
                         } ?></t>
-                        <td><?php echo $celebracao->semana ?> <?php echo $celebracao->diaSemana ?></td>
+                        <td><?php echo $celebracao->semana ?>     <?php echo $celebracao->diaSemana ?></td>
                         <td><?php echo $celebracao->turno ?></td>
                         <td class="text-center d-flex gap-1 justify-content-center">
                             <form action="<?php echo htmlspecialchars("celebracao.php") ?>" method="post" class="d-flex">
@@ -64,13 +65,15 @@ require_once "validaUser.php";
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </form>
-                            <form action="<?php echo htmlspecialchars("celebracao.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $celebracao->idCelebracao ?>">
-                                <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja deletar a celebração?')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            <?php if ($usuario->verificarNivelAcesso([1])): ?>
+                                <form action="<?php echo htmlspecialchars("celebracao.php") ?>" method="post" class="d-flex">
+                                    <input type="hidden" name="id" value="<?php echo $celebracao->idCelebracao ?>">
+                                    <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
+                                        onclick="return confirm('Tem certeza que deseja deletar a celebração?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -1,4 +1,5 @@
 <?php
+$nivelPermitidos = [1, 2];
 require_once "validaUser.php";
 ?>
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ require_once "validaUser.php";
 
 <body>
     <?php require_once "_parts/_header2.php"; ?>
-    
+
     <main class="container my-3">
         <div class="mt-3">
             <h3 class="tituloPrincipal">Coroinhas</h3>
@@ -25,7 +26,7 @@ require_once "validaUser.php";
             <a href="coroinha.php" class="btn btn-outline-success">Novo Coroinha</a>
         </div>
 
-        <table class="tableaG dataTable">
+        <table class="tableaCor dataTable">
             <thead>
                 <tr>
                     <th>#</th>
@@ -57,13 +58,15 @@ require_once "validaUser.php";
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </form>
-                            <form action="<?php echo htmlspecialchars("coroinha.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $coroinha->idCoroinha ?>">
-                                <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja deletar o coroinha?')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            <?php if ($usuario->verificarNivelAcesso([1])): ?>
+                                <form action="<?php echo htmlspecialchars("coroinha.php") ?>" method="post" class="d-flex">
+                                    <input type="hidden" name="id" value="<?php echo $coroinha->idCoroinha ?>">
+                                    <button title="Deletar" name="btnDeletar" class="btn btn-danger btn-sm" type="submit"
+                                        onclick="return confirm('Tem certeza que deseja deletar o coroinha?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
