@@ -1,6 +1,7 @@
 <?php
 $nivelPermitidos = [1, 2];
 require_once "validaUser.php";
+require_once "Includes/functions.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -29,7 +30,7 @@ require_once "validaUser.php";
             <table class="tableaCe dataTable">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="text-center">Data</th>
                         <th class="text-center">Comunidade</th>
                         <th class="text-center">Semana/Dia</th>
                         <th class="text-center">Turno</th>
@@ -49,7 +50,7 @@ require_once "validaUser.php";
                     foreach ($Celebracoes as $celebracao):
                         ?>
                         <tr>
-                            <td><?php echo $celebracao->idCelebracao ?></td>
+                            <td><?php echo formatarData($celebracao->data) ?></td>
                             <td><?php foreach ($comunidade as $c) {
                                 if ($c->idComunidade == $celebracao->idComunidadeFK) {
                                     echo $c->nomeComunidade;

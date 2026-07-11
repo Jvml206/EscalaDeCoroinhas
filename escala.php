@@ -1,6 +1,7 @@
 <?php
 $nivelPermitidos = [1];
 require_once "validaUser.php";
+require_once "Includes/functions.php";
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -16,111 +17,32 @@ $comunidades = $c->allOrder("ASC");
 $cor = new Coroinha();
 $coroinhas = $cor->allOrder("ASC");
 
-$db = Database::getInstance()->getConnection();
-if (isset($_POST['btnCadastrar'])) {
-    try {
-        $db->beginTransaction();
+$ce = new Celebracao();
 
-        foreach ($_POST['escala'] as $semana => $dias) {
+$esc = new Escala();
 
+if (isset($_POST['btnCadastrarEscalaMensal'])) {
+    $dadosEscala = $_POST['escala'] ?? [];
+    $dadosComunidade = $_POST['comunidade'] ?? [];
 
-
-            // Agora salva os coroinhas normalmente
-            foreach ($dias as $dia => $turnos) {
-                foreach ($turnos as $turno => $posicoes) {
-
-                    /* BUSCAR CELEBRAÇÃO */
-                    $sqlCelebracao = $db->prepare("
-                        SELECT idCelebracao 
-                        FROM Celebracao
-                        WHERE semana = :semana
-                        AND diaSemana = :dia
-                        AND turno = :turno
-                    ");
-                    $sqlCelebracao->execute([
-                        ":semana" => $semana . '°',
-                        ":dia" => $dia,
-                        ":turno" => $turno
-                    ]);
-                    $celebracao = $sqlCelebracao->fetch(PDO::FETCH_OBJ);
-                    if (!$celebracao)
-                        continue;
-
-                    $idCelebracao = $celebracao->idCelebracao;
-
-                    $comunidadeSemana = $_POST['comunidade'][$semana] ?? null;
-
-                    /* APAGA ESCALA ANTIGA */
-                    $del = $db->prepare("DELETE FROM Escala WHERE idCelebracaoFK = :id");
-                    $del->execute([":id" => $idCelebracao]);
-
-                    /* SALVAR COMUNIDADE */
-                    if ($comunidadeSemana != "") {
-                        // Escolhe a posição da comunidade na Segunda — por exemplo, posicao 1
-                        $posicao = 3; // ou ajuste conforme necessário
-
-                        // Insere comunidade na tabela Escala
-                        $sqlCom = $db->prepare("INSERT INTO Escala (idCelebracaoFK, posicao, idComunidadeFK) VALUES (:idCelebracao, :pos, :com)");
-                        $sqlCom->execute([
-                            ":idCelebracao" => $idCelebracao,
-                            ":pos" => $posicao,
-                            ":com" => $comunidadeSemana
-                        ]);
-                    }
-
-                    /* SALVAR COROINHAS */
-                    foreach ($posicoes as $pos => $idCoroinha) {
-                        if ($idCoroinha === "" || $idCoroinha === null || $idCoroinha === 0)
-                            continue;
-                        $sql = $db->prepare("
-                            INSERT INTO Escala
-                            (idCelebracaoFK,idCoroinhaFK,posicao)
-                            VALUES (:celebracao,:coroinha,:posicao)
-                        ");
-                        $sql->execute([
-                            ":celebracao" => $idCelebracao,
-                            ":coroinha" => $idCoroinha,
-                            ":posicao" => $pos
-                        ]);
-                    }
-                }
-            }
-        }
-
-        /* ===== ATUALIZAR numeroServindo ===== */
-        $db->exec("UPDATE Coroinha SET numeroServindo = 0");
-        $db->exec("UPDATE Coroinha c SET numeroServindo = (SELECT COUNT(*) FROM Escala e WHERE e.idCoroinhaFK = c.idCoroinha)");
-
-        $db->commit();
+    if ($esc->salvarEscalaCompleta($dadosEscala, $dadosComunidade)) {
         echo "<script>alert('Escala salva com sucesso');</script>";
-
-    } catch (Exception $e) {
-        $db->rollBack();
-        echo "Erro: " . $e->getMessage();
+    } else {
+        echo "Erro: " . $esc->getErro();
     }
 }
 
-$Escalas = [];
-$ComunidadesEscala = [];
-$sql = $db->query("
-SELECT 
-    e.idCelebracaoFK,
-    e.idCoroinhaFK,
-    e.posicao,
-    c.semana,
-    c.diaSemana,
-    c.turno,
-    c.idComunidadeFK
-FROM Escala e
-JOIN Celebracao c 
-ON c.idCelebracao = e.idCelebracaoFK
-");
-$result = $sql->fetchAll(PDO::FETCH_OBJ);
-foreach ($result as $r) {
-    $semana = str_replace('°', '', $r->semana);
-    $Escalas[$semana][$r->diaSemana][$r->turno][$r->posicao] = $r->idCoroinhaFK;
-    $ComunidadesEscala[$semana] = $r->idComunidadeFK;
+if (isset($_POST['btnCadastrarEscalaSexta'])) {
+    $dadosSexta = $_POST['escalaSexta'] ?? [];
+
+    if ($esc->salvarEscalaSexta($dadosSexta)) {
+        echo "<script>alert('Escala de sexta salva com sucesso');</script>";
+    } else {
+        echo "Erro: " . $esc->getErro();
+    }
 }
+
+[$Escalas, $ComunidadesEscala] = $esc->montarMatrizEscalas();
 ?>
 
 <!DOCTYPE html>
@@ -164,15 +86,7 @@ foreach ($result as $r) {
                                 <?php for ($pos = 1; $pos <= 5; $pos++): ?>
                                     <td>
                                         <select name="escala[<?= $semana ?>][Domingo][Manhã][<?= $pos ?>]" class="form-select">
-                                            <option value="" class="align-middle text-center">--</option>
-                                            <?php $selecionado = $Escalas[$semana]['Domingo']['Manhã'][$pos] ?? null; ?>
-                                            <?php foreach ($coroinhas as $c): ?>
-                                                <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
-                                                    <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
-                                                    class="align-middle text-center">
-                                                    <?= $c->nomeCoroinha ?>
-                                                </option>
-                                            <?php endforeach; ?>
+                                            <?php renderOptionsCoroinha($coroinhas, coroinhaSelecionado($Escalas, $semana, 'Domingo', 'Manhã', $pos)) ?>
                                         </select>
                                     </td>
                                 <?php endfor; ?>
@@ -182,15 +96,7 @@ foreach ($result as $r) {
                                 <?php for ($pos = 1; $pos <= 5; $pos++): ?>
                                     <td>
                                         <select name="escala[<?= $semana ?>][Domingo][Noite][<?= $pos ?>]" class="form-select">
-                                            <option value="" class="align-middle text-center">--</option>
-                                            <?php $selecionado = $Escalas[$semana]['Domingo']['Noite'][$pos] ?? null; ?>
-                                            <?php foreach ($coroinhas as $c): ?>
-                                                <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
-                                                    <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
-                                                    class="align-middle text-center">
-                                                    <?= $c->nomeCoroinha ?>
-                                                </option>
-                                            <?php endforeach; ?>
+                                            <?php renderOptionsCoroinha($coroinhas, coroinhaSelecionado($Escalas, $semana, 'Domingo', 'Noite', $pos)) ?>
                                         </select>
                                     </td>
                                 <?php endfor; ?>
@@ -202,31 +108,14 @@ foreach ($result as $r) {
                                 <?php for ($pos = 1; $pos <= 2; $pos++): ?>
                                     <td>
                                         <select name="escala[<?= $semana ?>][Segunda][Noite][<?= $pos ?>]" class="form-select">
-                                            <option value="" class="align-middle text-center">Coroinha</option>
-                                            <?php
-                                            $selecionado = $Escalas[$semana]['Segunda']['Noite'][$pos] ?? null;
-                                            ?>
-                                            <?php foreach ($coroinhas as $c): ?>
-                                                <option value="<?= $c->idCoroinha ?>" data-nivel="<?= $c->nivel ?>"
-                                                    <?= ($selecionado == $c->idCoroinha) ? 'selected' : '' ?>
-                                                    class="align-middle text-center">
-                                                    <?= $c->nomeCoroinha ?>
-                                                </option>
-                                            <?php endforeach; ?>
+                                            <?php renderOptionsCoroinha($coroinhas, coroinhaSelecionado($Escalas, $semana, 'Segunda', 'Noite', $pos), 'Coroinha') ?>
                                         </select>
                                     </td>
                                 <?php endfor; ?>
                                 <!-- comunidade -->
                                 <td colspan="3">
                                     <select name="comunidade[<?= $semana ?>]" class="form-select align-middle text-center">
-                                        <?php $comSel = $ComunidadesEscala[$semana] ?? null; ?>
-                                        <option value="">Selecionar comunidade</option>
-                                        <?php foreach ($comunidades as $com): ?>
-                                            <option value="<?= $com->idComunidade ?>" class="align-middle text-center"
-                                                <?= ($comSel == $com->idComunidade) ? 'selected' : '' ?>>
-                                                <?= $com->nomeComunidade ?>
-                                            </option>
-                                        <?php endforeach; ?>
+                                        <?php renderOptionsComunidade($comunidades, $ComunidadesEscala[$semana] ?? null) ?>
                                     </select>
                                 </td>
                             </tr>
@@ -235,10 +124,48 @@ foreach ($result as $r) {
                 </table>
 
                 <div class="col-12 mt-3 mb-3 d-flex gap-2">
-                    <button type="submit" name="btnCadastrar" id="btnCadastrar"
-                        class="btn btn-outline-success">Salvar</button>
+                    <button type="submit" name="btnCadastrarEscalaMensal" id="btnCadastrarEscalaMensal"
+                        class="btn btn-outline-success">Salvar Escala Mensal</button>
                 </div>
+            </div>
+        </form>
+
+        <form method="post" action="escala.php">
+            <div class="table-responsive tabela-scroll">
+                <table class="table tabela overflow-hidden dataTable">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Data</th>
+                            <th>Responsável</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $dados = $ce->searchSexta(); ?>
+                        <?php if (empty($dados)): ?>
+                            <tr>
+                                <td colspan="2" class="align-middle text-center">Nenhuma sexta-feira cadastrada.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($dados as $celebracao): ?>
+                                <tr>
+                                    <td class="align-middle text-center">
+                                        <?= formatarData($celebracao['data']) ?>
+                                    </td>
+                                    <td>
+                                        <select name="escalaSexta[<?= $celebracao['idCelebracao'] ?>][Noite][1]"
+                                            class="form-select">
+                                            <?php renderOptionsCoroinha($coroinhas, coroinhaSelecionado($Escalas, $celebracao['idCelebracao'], 'Sexta', 'Noite', 1)) ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
                 </table>
+                <div class="col-12 mt-3 mb-3 d-flex gap-2">
+                    <button type="submit" name="btnCadastrarEscalaSexta" id="btnCadastrarSexta"
+                        class="btn btn-outline-success">Salvar Escala Sexta</button>
+                </div>
             </div>
         </form>
     </main>

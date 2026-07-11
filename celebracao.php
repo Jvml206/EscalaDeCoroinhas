@@ -10,13 +10,24 @@ spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
 });
 $Celebracao = new Celebracao();
+$comunidade = new Comunidade();
 
 if (filter_has_var(INPUT_POST, "btnCadastrar")):
+    $diaSemana = filter_input(INPUT_POST, "diaSemana", FILTER_SANITIZE_STRING);
 
-    $Celebracao->setSemana(filter_input(INPUT_POST, "semana", FILTER_SANITIZE_STRING));
-    $Celebracao->setDiaSemana(filter_input(INPUT_POST, "diaSemana", FILTER_SANITIZE_STRING));
-    $Celebracao->setTurno(filter_input(INPUT_POST, "turno", FILTER_SANITIZE_STRING));
-    $Celebracao->setIdComunidadeFK(filter_input(INPUT_POST, "idComunidadeFK", FILTER_SANITIZE_STRING));
+    if ($diaSemana === "Domingo" || $diaSemana === "Segunda") {
+        $Celebracao->setSemana(filter_input(INPUT_POST, "semana", FILTER_SANITIZE_STRING));
+        $Celebracao->setDiaSemana($diaSemana);
+        $Celebracao->setTurno(filter_input(INPUT_POST, "turno", FILTER_SANITIZE_STRING));
+        $Celebracao->setData(null);
+        $Celebracao->setIdComunidadeFK(filter_input(INPUT_POST, "idComunidadeFK", FILTER_SANITIZE_STRING));
+    } else {
+        $Celebracao->setSemana("1°");
+        $Celebracao->setDiaSemana($diaSemana);
+        $Celebracao->setTurno('Noite');
+        $Celebracao->setData(filter_input(INPUT_POST, "data", FILTER_SANITIZE_STRING));
+        $Celebracao->setIdComunidadeFK($comunidade->search("nomeComunidade", "Comunidade Nossa Senhora de Fátima")->idComunidade);
+    }
 
     $id = filter_input(INPUT_POST, 'id');
     if (empty($id)):
@@ -83,6 +94,17 @@ endif;
             <input type="hidden" value="<?php echo $Celebracoes->idCelebracao ?? null; ?>" name="id">
 
             <div class="col-6">
+                <label for="diaSemana" class="form-label">Dia da Semana</label>
+                <select name="diaSemana" class="form-select" aria-label="Default select example" id="diaSemana"
+                    required>
+                    <option disabled <?= (!isset($Celebracoes->diaSemana)) ? 'selected' : '' ?>>Dia da Semana</option>
+                    <option value="Domingo" <?= (isset($Celebracoes->diaSemana) && $Celebracoes->diaSemana == 'Domingo') ? 'selected' : '' ?>>Domingo</option>
+                    <option value="Segunda" <?= (isset($Celebracoes->diaSemana) && $Celebracoes->diaSemana == 'Segunda') ? 'selected' : '' ?>>Segunda</option>
+                    <option value="Sexta" <?= (isset($Celebracoes->diaSemana) && $Celebracoes->diaSemana == 'Sexta') ? 'selected' : '' ?>>Sexta</option>
+                </select>
+            </div>
+
+            <div class="col-6 campoDomSeg">
                 <label for="semana" class="form-label">Semana</label>
                 <select name="semana" class="form-select" aria-label="Default select example" id="semana" required>
                     <option disabled <?= (!isset($Celebracoes->semana)) ? 'selected' : '' ?>>Selecione a semana
@@ -95,17 +117,7 @@ endif;
                 </select>
             </div>
 
-            <div class="col-6">
-                <label for="diaSemana" class="form-label">Dia da Semana</label>
-                <select name="diaSemana" class="form-select" aria-label="Default select example" id="diaSemana"
-                    required>
-                    <option disabled <?= (!isset($Celebracoes->diaSemana)) ? 'selected' : '' ?>>Dia da Semana</option>
-                    <option value="Domingo" <?= (isset($Celebracoes->diaSemana) && $Celebracoes->diaSemana == 'Domingo') ? 'selected' : '' ?>>Domingo</option>
-                    <option value="Segunda" <?= (isset($Celebracoes->diaSemana) && $Celebracoes->diaSemana == 'Segunda') ? 'selected' : '' ?>>Segunda</option>
-                </select>
-            </div>
-
-            <div class="col-6">
+            <div class="col-6 campoDomSeg">
                 <label for="turno" class="form-label">Turno</label>
                 <select name="turno" class="form-select" aria-label="Default select example" id="turno" required>
                     <option disabled <?= (!isset($Celebracoes->turno)) ? 'selected' : '' ?>>Selecione o Turno
@@ -115,16 +127,23 @@ endif;
                 </select>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 campoDomSeg">
                 <label for="idComunidadeFK" class="form-label">Comunidade</label>
-                <select name="idComunidadeFK" class="form-select" id="idComunidadeFK" required>
-                    <option disabled <?= (!isset($Celebracoes->idComunidadeFK)) ? 'selected' : '' ?>>Selecione a comunidade</option>
+                <select name="idComunidadeFK" class="form-select" id="idComunidadeFK">
+                    <option disabled <?= (!isset($Celebracoes->idComunidadeFK)) ? 'selected' : '' ?>>Selecione a
+                        comunidade</option>
                     <?php foreach ($comunidade as $c): ?>
                         <option value="<?= $c->idComunidade ?>" <?= (!empty($Celebracoes) && intval($Celebracoes->idComunidadeFK) === intval($c->idComunidade)) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($c->nomeComunidade) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+
+            <div class="col-6 dataSexta">
+                <label for="data" class="form-label">Data</label>
+                <input type="date" name="data" id="data" required class="form-control"
+                    value="<?= $Celebracoes->data ?? '' ?>">
             </div>
 
             <div class="col-12 mt-3 mb-3 d-flex gap-2">
@@ -139,6 +158,7 @@ endif;
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/celebracao.js"></script>
 </body>
 
 </html>

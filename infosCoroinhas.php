@@ -71,11 +71,11 @@ $observacao = new Observacao();
                             <?= htmlspecialchars($coroinha->status) ?>
                         </div>
                         <div class="info">
-                            <strong>Preferência de Turno:</strong>
+                            <strong>Pref. de Turno:</strong>
                             <?= htmlspecialchars($coroinha->preferenciaTurno) ?>
                         </div>
                         <div class="info">
-                            <strong>Preferência de Domingo:</strong>
+                            <strong>Pref. de Domingo:</strong>
                             <?= htmlspecialchars($coroinha->preferenciaDomingo) ?>
                         </div>
                         <div class="info">

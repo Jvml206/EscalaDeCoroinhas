@@ -41,8 +41,9 @@ DROP TABLE IF EXISTS Celebracao;
 CREATE TABLE IF NOT EXISTS Celebracao (
     idCelebracao INT AUTO_INCREMENT PRIMARY KEY,
     semana VARCHAR(5) NOT NULL,            					-- 1,2,3,4,5
-    diaSemana ENUM('Domingo','Segunda') NOT NULL,
+    diaSemana ENUM('Domingo','Segunda', 'Sexta') NOT NULL,
     turno ENUM('Manhã','Noite') NOT NULL,
+    data date,
     idComunidadeFK INT,
     FOREIGN KEY (idComunidadeFK)
         REFERENCES comunidade(idComunidade)
@@ -99,4 +100,4 @@ BEGIN
 END$$
 DELIMITER ;
 
-select * from escala;
+select * from celebracao;

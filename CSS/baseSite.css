@@ -74,7 +74,7 @@
     vertical-align: middle;
 }
 
-.tabela td:first-child {
+.tabela .diaSemana {
     font-weight: 600;
     background: #f7f7f7;
 }
@@ -164,6 +164,14 @@
 .tabela{
     min-width:850px;
 }
+
+.campoDomSeg {
+    display: none;
+}
+
+.dataSexta {
+    display: none;
+}   
 
 @media (max-width:768px){
     .tabela{

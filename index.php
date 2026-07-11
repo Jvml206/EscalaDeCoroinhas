@@ -52,6 +52,27 @@ foreach ($comunidades as $com) {
     $comunidadesMap[$com->idComunidade] = $com;
 }
 
+$celebracoes = [];
+$linhas = $esc->getCelebracaoSexta();
+foreach ($linhas as $linha) {
+    $id = $linha['idCelebracao'];
+
+    if (!isset($celebracoes[$id])) {
+        $celebracoes[$id] = [
+            'data' => $linha['data'],
+            'turno' => $linha['turno'],
+            'coroinhas' => [],
+        ];
+    }
+
+    if ($linha['nomeCoroinha']) {
+        $celebracoes[$id]['coroinhas'][] = [
+            'nome' => $linha['nomeCoroinha'],
+            'nivel' => $linha['nivel'],
+        ];
+    }
+}
+
 require_once "Includes/functions.php";
 ?>
 <!DOCTYPE html>
@@ -86,7 +107,7 @@ require_once "Includes/functions.php";
                 <tbody class="align-middle text-center">
                     <?php for ($semana = 1; $semana <= 5; $semana++): ?>
                         <tr>
-                            <td rowspan="2">
+                            <td rowspan="2" class="diaSemana">
                                 <?= $semana ?>º Domingo
                             </td>
                             <td>Manhã</td>
@@ -110,8 +131,9 @@ require_once "Includes/functions.php";
                                 </td>
                             <?php endfor; ?>
                         </tr>
+
                         <tr>
-                            <td><?= $semana ?>º Segunda</td>
+                            <td class="diaSemana"><?= $semana ?>º Segunda-Feira</td>
                             <td>Noite</td>
                             <!-- coroinha -->
                             <?php for ($pos = 1; $pos <= 2; $pos++):
@@ -129,6 +151,43 @@ require_once "Includes/functions.php";
                             </td>
                         </tr>
                     <?php endfor; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <h1 class="h1-index">Escala De Missa No Seminário (1° Sexta-Feira do Mês)</h1>
+        <div class="table-responsive tabela-scroll">
+            <table class="table tabela overflow-hidden">
+                <thead class="table-success">
+                    <tr>
+                        <th>Dia</th>
+                        <th>Responsável</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle text-center">
+                    <?php if (empty($celebracoes)): ?>
+                        <tr>
+                            <td colspan="2">Nenhuma celebração de sexta-feira cadastrada.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($celebracoes as $celebracao): ?>
+                            <tr>
+                                <td class="diaSemana">
+                                    <?= date('d/m/Y', strtotime($celebracao['data'])) ?>
+                                </td>
+                                <?php if (empty($celebracao['coroinhas'])): ?>
+                                    <td>--</td>
+                                <?php else: ?>
+                                    <?php foreach ($celebracao['coroinhas'] as $i => $co): ?>
+                                        <?php if ($i > 0): ?>, <?php endif; ?>
+                                        <td class="<?= classeNivel($co['nivel']) ?>">
+                                            <?= $co['nome'] ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
