@@ -130,6 +130,8 @@ if (isset($_POST['btnCadastrarEscalaSexta'])) {
             </div>
         </form>
 
+        <h3 class="tituloPrincipal">Escala 1° Sexta do Mês (Seminário)</h3>
+
         <form method="post" action="escala.php">
             <div class="table-responsive tabela-scroll">
                 <table class="table tabela overflow-hidden dataTable">

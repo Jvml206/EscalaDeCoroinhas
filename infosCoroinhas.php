@@ -94,13 +94,15 @@ $observacao = new Observacao();
                                 ?>
                                 <ul class="lista-observacoes">
                                     <?php foreach ($observacoes as $obs): ?>
-                                        <li class="obs-item">
-                                            <?php if ($obs->status === 'Corrigida'): ?>
-                                                <s><?= htmlspecialchars($obs->observacao) ?></s>
-                                            <?php else: ?>
+                                        <?php if ($obs->status === 'Corrigida'): ?>
+                                            <!-- <li class="obs-item"> -->
+                                                <!-- <s>< ?= htmlspecialchars($obs->observacao) ?></s> -->
+                                            <!-- </li> -->
+                                        <?php else: ?>
+                                            <li class="obs-item">
                                                 <?= htmlspecialchars($obs->observacao) ?>
-                                            <?php endif; ?>
-                                        </li>
+                                            </li>
+                                        <?php endif; ?>
                                     <?php endforeach; ?>
                                 </ul>
                             <?php else: ?>

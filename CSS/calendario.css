@@ -1,0 +1,387 @@
+@import url("baseSite.css");
+
+/* ===== Toast de sucesso/erro (cadastro, edição, exclusão) ===== */
+
+.toast-agenda {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    padding: 14px 24px;
+    border-radius: 10px;
+    color: var(--branco);
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .2);
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.toast-agenda.visivel {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-agenda.toast-sucesso {
+    background: #28a745;
+}
+
+.toast-agenda.toast-deletado {
+    background: #dc3545;
+}
+
+.toast-agenda.toast-erro {
+    background: var(--preto);
+}
+
+/* ===== Layout geral da página ===== */
+
+.pagina-calendario {
+    padding: 28px clamp(16px, 4vw, 56px);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.topo-calendario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Botão de ação principal ("Novo evento" / "Salvar"), no vermelho do site */
+.btn-vermelho {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+    color: var(--branco);
+    font-weight: 600;
+}
+
+.btn-vermelho:hover,
+.btn-vermelho:focus {
+    background: var(--vermelho-escuro);
+    border-color: var(--vermelho-escuro);
+    color: var(--branco);
+}
+
+/* Card branco que envolve o calendário, no mesmo estilo dos demais cards do site */
+.cartao-calendario {
+    background: var(--branco);
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .1);
+}
+
+/* ===== Calendário (FullCalendar) ===== */
+
+#calendar {
+    font-size: .85rem;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.fc .fc-daygrid-day-frame {
+    min-height: 100px;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--preto);
+    text-transform: capitalize;
+}
+
+/* Cantos arredondados no grid inteiro do calendário */
+.fc-theme-standard .fc-scrollgrid {
+    border-radius: 12px;
+    overflow: hidden;
+    border-color: #e0e0e0;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+    border-color: #e8e8e8;
+}
+
+/* Nome do dia da semana (dom., seg., ...) */
+.fc .fc-col-header-cell-cushion {
+    text-decoration: none !important;
+    color: var(--preto) !important;
+    text-transform: uppercase;
+    font-size: .75rem;
+    letter-spacing: .5px;
+    font-weight: 700;
+    padding: 10px 4px !important;
+}
+
+/* Número do dia */
+.fc .fc-daygrid-day-number {
+    text-decoration: none !important;
+    color: var(--preto) !important;
+    font-weight: 800;
+    padding: 8px 10px !important;
+}
+
+.fc .fc-daygrid-day-number:hover {
+    color: var(--vermelho) !important;
+}
+
+.fc .fc-day-other .fc-daygrid-day-number {
+    color: #bbb !important;
+}
+
+.fc .fc-col-header-cell {
+    background: var(--cinza);
+}
+
+/* Botões do calendário (today / < / >) no tema preto -> vermelho no hover */
+.fc .fc-button {
+    box-shadow: none !important;
+    text-transform: capitalize;
+}
+
+.fc .fc-button-primary {
+    background-color: var(--preto);
+    border-color: var(--preto);
+}
+
+.fc .fc-button-primary:hover {
+    background-color: var(--vermelho);
+    border-color: var(--vermelho);
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+    background-color: var(--vermelho-escuro);
+    border-color: var(--vermelho-escuro);
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: #555;
+    border-color: #555;
+}
+
+.fc .fc-day-today {
+    background: rgba(198, 40, 40, .08) !important;
+}
+
+/* Bloco do evento: sempre com fundo colorido, mesmo em eventos de um dia só */
+.fc-event {
+    border-radius: 6px !important;
+    padding: 2px 6px;
+    font-size: .78rem;
+    cursor: pointer;
+    border: none !important;
+}
+
+.evento-texto {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.evento-unico {
+    border-radius: 6px !important;
+}
+
+.evento-inicio {
+    border-radius: 6px 0 0 6px !important;
+}
+
+.evento-meio {
+    border-radius: 0 !important;
+}
+
+.evento-fim {
+    border-radius: 0 6px 6px 0 !important;
+}
+
+/* ===== Painel lateral de cadastro/edição ===== */
+
+#painelEvento {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    max-width: 100%;
+    height: 100vh;
+    background: var(--branco);
+    box-shadow: -2px 0 18px rgba(0, 0, 0, .18);
+    padding: 20px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform .3s ease;
+    z-index: 9999;
+}
+
+#painelEvento.ativo {
+    transform: translateX(0);
+}
+
+.painel-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--vermelho);
+}
+
+.painel-cabecalho h4 {
+    color: var(--preto);
+    font-weight: 700;
+}
+
+.contador-caracteres {
+    text-align: right;
+    font-size: .75rem;
+    color: #6c757d;
+    margin-top: 4px;
+}
+
+/* Bolinhas de seleção de cor do evento */
+.opcoes-cor {
+    display: flex;
+    gap: 10px;
+}
+
+.bolinha-cor {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color .2s ease, transform .2s ease;
+}
+
+.bolinha-cor:hover {
+    transform: scale(1.08);
+}
+
+.btn-check:checked+.bolinha-cor {
+    border-color: var(--vermelho);
+    box-shadow: 0 0 0 2px rgba(198, 40, 40, .25);
+}
+
+.cor-azul {
+    background: #4285F4;
+}
+
+.cor-verde {
+    background: #34A853;
+}
+
+.cor-vermelho {
+    background: #EA4335;
+}
+
+.cor-amarelo {
+    background: #FBBC05;
+}
+
+/* ===== Painel lateral — estilo do cartão de detalhes - agenda.php ===== */
+
+#painelEvento {
+    border-left: 6px solid var(--cor-evento, var(--vermelho));
+}
+
+.painel-cabecalho {
+    border-bottom-color: var(--cor-evento, var(--vermelho));
+    transition: border-color .2s ease;
+}
+
+.painel-cabecalho h4#painelTitulo {
+    color: var(--preto);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.35;
+    padding-right: 12px;
+}
+
+.painel-corpo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.painel-corpo .form-label {
+    font-size: .90rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #9a9a9a;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.painel-corpo p {
+    color: var(--preto);
+    font-size: 1.15rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+#painelDescricao {
+    white-space: pre-wrap;
+}
+
+/* "Quando" ganha um chip destacado, ajuda a bater o olho e achar a data rápido */
+#painelData {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cinza);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    width: fit-content;
+}
+
+#painelData::before {
+    font-family: "bootstrap-icons";
+    content: "\f217"; /* calendar-event */
+    color: var(--cor-evento, var(--vermelho));
+}
+
+#painelLocalWrap p#painelLocal {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#painelLocal::before {
+    font-family: "bootstrap-icons";
+    content: "\f3c5"; /* geo-alt */
+    color: var(--cor-evento, var(--vermelho));
+}
+
+@media (max-width: 991px) {
+
+    .pagina-calendario {
+        padding: 16px;
+    }
+
+    .cartao-calendario {
+        padding: 12px;
+    }
+
+    /* No mobile o painel vira uma bottom sheet, controlada pela mesma classe .ativo */
+    #painelEvento {
+        top: auto;
+        bottom: -100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 85%;
+        border-radius: 20px 20px 0 0;
+        transform: none;
+        transition: bottom .3s ease;
+    }
+
+    #painelEvento.ativo {
+        bottom: 0;
+        transform: none;
+    }
+}

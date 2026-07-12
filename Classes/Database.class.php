@@ -7,7 +7,7 @@ final class Database{
     private function __construct() {
 
         try {
-            $config = parse_ini_file(__DIR__.'/../config.ini',true)['database'];
+            $config = parse_ini_file(__DIR__.'/../../config.ini',true)['database'];
             $dsn = '';
             if ($config['driver'] ==='mysql') {
                 $dsn = "mysql:host={$config['host']};port={$config['port']}; dbname={$config['dbname']}; charset=utf8";

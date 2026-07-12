@@ -51,6 +51,15 @@
     border-color: #222;
 }
 
+.btn-cancelar {
+    border-color: #444;
+    font-weight: 600;
+}
+
+.btn-cancelar:hover {
+    border-color: #222;
+}
+
 /* ===== TABELA ESCALA ===== */
 
 .tabela {
@@ -172,6 +181,22 @@
 .dataSexta {
     display: none;
 }   
+
+.painel-bolinha-cor {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.painel-titulo-evento {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--preto);
+    vertical-align: middle;
+}
 
 @media (max-width:768px){
     .tabela{

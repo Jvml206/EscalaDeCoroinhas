@@ -57,6 +57,13 @@ $current = basename($_SERVER['PHP_SELF']);
               href="listaCelebracoes.php">Celebrações</a>
           </li>
         <?php endif; ?>
+        
+        <?php if ($usuario->verificarNivelAcesso([1, 2])): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= $current === 'cadCalendario.php' ? 'active' : '' ?>"
+              href="cadCalendario.php">Calendário</a>
+          </li>
+        <?php endif; ?>
 
         <?php if ($usuario->verificarNivelAcesso([1])): ?>
           <li class="nav-item">
