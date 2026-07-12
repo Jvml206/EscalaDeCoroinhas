@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             document.getElementById("dataInicioData").value = formatarData(info.start);
             document.getElementById("dataFimData").value = formatarData(ultimoDia);
-            document.getElementById("horaInicio").value = "19:00";
-            document.getElementById("horaFim").value = "20:00";
+            document.getElementById("horaInicio").value = "08:00";
+            document.getElementById("horaFim").value = "09:00";
 
             abrirPainel();
             calendar.unselect();
