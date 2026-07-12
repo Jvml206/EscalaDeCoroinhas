@@ -40,6 +40,10 @@ $current = basename($_SERVER['PHP_SELF']);
         <li class="nav-item">
           <a class="nav-link <?= $current === 'comunidades.php' ? 'active' : '' ?>" href="comunidades.php">Comunidades</a>
         </li>
+        
+        <li class="nav-item">
+          <a class="nav-link <?= $current === 'agenda.php' ? 'active' : '' ?>" href="agenda.php">Agenda</a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link <?= $current === 'dados.php' ? 'active' : '' ?>" href="dados.php">Dados</a>
