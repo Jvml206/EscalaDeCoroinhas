@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule ^(Classes|DB|Includes|PHPMailer|_parts)/ - [F,L]
+</IfModule>

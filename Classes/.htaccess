@@ -1,1 +1,10 @@
-Require all denied
+# Bloqueia qualquer acesso direto a esta pasta
+<IfModule mod_authz_core.c>
+    # Apache 2.4+
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    # Apache 2.2 (fallback)
+    Order allow,deny
+    Deny from all
+</IfModule>

@@ -107,7 +107,7 @@ BEGIN
         (SELECT COUNT(*) FROM Comunidade) AS totalComunidades,
 
         -- Celebração
-        (SELECT COUNT(*) FROM Celebracao) AS totalCelebracoes;
+        (SELECT COUNT(*) FROM Celebracao WHERE data >= CURDATE() OR data IS NULL) AS totalCelebracoes;
 END$$
 DELIMITER ;
 
