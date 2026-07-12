@@ -79,6 +79,17 @@ CREATE TABLE RecuperacaoSenha (
     CONSTRAINT recuperacao_senha_usuario FOREIGN KEY (idUsuarioFK) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS Calendario;
+CREATE TABLE IF NOT EXISTS Calendario (
+    idCalendario INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    descricao VARCHAR(250) NOT NULL,
+    dataInicio DATETIME NOT NULL,
+    dataFim DATETIME NOT NULL,
+    corDataCalendario VARCHAR(10) NOT NULL,
+    local VARCHAR(100) NOT NULL
+);
+
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dashboard`()
 BEGIN

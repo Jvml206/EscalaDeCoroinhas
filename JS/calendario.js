@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         eventDisplay: "block",
 
-        events: "ajax/eventosCalendario.php",
+        events: "Ajax/eventosCalendario.php",
 
         eventClick: function (info) {
             preencherPainel(info.event);

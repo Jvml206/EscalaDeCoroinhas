@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // inclusive quando começa e termina no mesmo dia.
         eventDisplay: "block",
 
-        events: "ajax/eventosCalendario.php",
+        events: "Ajax/eventosCalendario.php",
 
         // Cobre clique único e arraste por vários dias: pega o primeiro e o
         // último dia selecionados e preenche início/fim do formulário.
