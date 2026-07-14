@@ -99,7 +99,7 @@ $toast = $mensagensStatus[$statusRecebido] ?? null;
                 <button type="button" class="btn-close" id="btnFecharPainel" aria-label="Fechar"></button>
             </div>
 
-            <form action="cadCalendario.php" method="post" id="formEvento">
+            <form action="cadCalendario.php" method="post" id="formEvento" class="painel-corpo">
 
                 <input type="hidden" name="id" id="id">
 
@@ -198,6 +198,7 @@ $toast = $mensagensStatus[$statusRecebido] ?? null;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/locales-all.global.min.js"></script>
+    <script src="JS/calendario.js?v=<?php echo filemtime('JS/calendario.js'); ?>"></script>
     <script src="JS/calendarioCad.js?v=<?php echo filemtime('JS/calendarioCad.js'); ?>"></script>
 </body>
 

@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Cobre clique único e arraste por vários dias: pega o primeiro e o
         // último dia selecionados e preenche início/fim do formulário.
         select: function (info) {
+            resetarCorFormulario();
 
             novoEvento();
 
@@ -118,6 +119,17 @@ document.addEventListener("DOMContentLoaded", function () {
         atualizarContador();
     }
 
+    function resetarCorFormulario() {
+        const corPadrao = "#EA4335"; // vermelho
+
+        // desmarca todos e marca o vermelho
+        document.querySelectorAll('input[name="corDataCalendario"]').forEach(input => {
+            input.checked = (input.value === corPadrao);
+        });
+
+        painel.style.setProperty("--cor-evento", corPadrao);
+    }
+
     function preencherFormularioEdicao(event) {
 
         document.getElementById("id").value = event.id;
@@ -133,10 +145,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("horaInicio").value = inicio.toTimeString().slice(0, 5);
         document.getElementById("horaFim").value = fim.toTimeString().slice(0, 5);
 
-        const cor = event.extendedProps.cor;
+        const cor = event.extendedProps.cor || "#EA4335";
         const radio = document.querySelector(`input[name="corDataCalendario"][value="${cor}"]`);
         if (radio) radio.checked = true;
 
+        painel.style.setProperty("--cor-evento", cor);
         painelTitulo.textContent = "Editar evento";
         btnExcluir.style.display = "block";
         document.getElementById("idExcluir").value = event.id;
