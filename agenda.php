@@ -48,6 +48,10 @@
                     <label class="form-label d-block">Local</label>
                     <p id="painelLocal" class="mb-0"></p>
                 </div>
+
+                <a href="#" id="btnGoogleAgenda" target="_blank" class="btn btn-outline-primary w-100 mt-2">
+                    <i class="bi bi-calendar-plus"></i> Adicionar ao Google Agenda
+                </a>
             </div>
         </div>
     </main>

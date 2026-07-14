@@ -61,6 +61,15 @@ document.addEventListener("DOMContentLoaded", function () {
         eventClick: function (info) {
             preencherPainel(info.event);
             abrirPainel();
+            eventoAtual = info.event;
+
+            document.getElementById('btnGoogleAgenda').href = gerarLinkGoogleAgenda(info.event);
+
+            // pega a cor do evento (o que estiver preenchido)
+            const cor = info.event.backgroundColor || info.event.borderColor || info.event.extendedProps?.color || '#0d6efd';
+
+            // seta a variável CSS no painel (ou direto nos botões)
+            document.getElementById('painelEvento').style.setProperty('--cor-evento', cor);
         },
 
         eventClassNames: function (info) {
@@ -134,4 +143,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("btnFecharPainel").addEventListener("click", fecharPainel);
 
+    function formatarDataGoogle(data) {
+        return data.toISOString().replace(/-|:|\.\d+/g, '');
+    }
+
+    function gerarLinkGoogleAgenda(evento) {
+        const inicio = formatarDataGoogle(new Date(evento.start));
+        const fim = formatarDataGoogle(new Date(evento.end || evento.start));
+
+        const params = new URLSearchParams({
+            action: 'TEMPLATE',
+            text: evento.title || '',
+            dates: `${inicio}/${fim}`,
+            details: evento.extendedProps?.descricao || '',
+            location: evento.extendedProps?.local || ''
+        });
+
+        return `https://www.google.com/calendar/render?${params.toString()}`;
+    }
 });

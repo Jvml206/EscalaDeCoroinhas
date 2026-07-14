@@ -43,11 +43,11 @@ endif;
 
 // Mensagens exibidas no toast, de acordo com o "status" que veio na URL após o redirect
 $mensagensStatus = [
-    "add_ok"     => ["sucesso", "Evento cadastrado com sucesso."],
-    "add_erro"   => ["erro", "Erro ao cadastrar o evento."],
-    "edit_ok"    => ["sucesso", "Evento alterado com sucesso."],
-    "edit_erro"  => ["erro", "Erro ao alterar o evento."],
-    "delete_ok"  => ["deletado", "Evento excluído com sucesso."],
+    "add_ok" => ["sucesso", "Evento cadastrado com sucesso."],
+    "add_erro" => ["erro", "Erro ao cadastrar o evento."],
+    "edit_ok" => ["sucesso", "Evento alterado com sucesso."],
+    "edit_erro" => ["erro", "Erro ao alterar o evento."],
+    "delete_ok" => ["deletado", "Evento excluído com sucesso."],
     "delete_erro" => ["erro", "Erro ao excluir o evento."],
 ];
 
@@ -151,7 +151,7 @@ $toast = $mensagensStatus[$statusRecebido] ?? null;
                     <label class="form-label d-block">Cor</label>
                     <div class="opcoes-cor">
 
-                        <input type="radio" class="btn-check" name="corDataCalendario" id="azul" value="#4285F4" checked>
+                        <input type="radio" class="btn-check" name="corDataCalendario" id="azul" value="#4285F4"checked>
                         <label class="bolinha-cor cor-azul" for="azul"></label>
 
                         <input type="radio" class="btn-check" name="corDataCalendario" id="verde" value="#34A853">
@@ -162,6 +162,9 @@ $toast = $mensagensStatus[$statusRecebido] ?? null;
 
                         <input type="radio" class="btn-check" name="corDataCalendario" id="amarelo" value="#FBBC05">
                         <label class="bolinha-cor cor-amarelo" for="amarelo"></label>
+
+                        <input type="radio" class="btn-check" name="corDataCalendario" id="preto" value="#202124">
+                        <label class="bolinha-cor cor-preto" for="preto"></label>
 
                     </div>
                 </div>

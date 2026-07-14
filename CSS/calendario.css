@@ -281,6 +281,10 @@
     background: #FBBC05;
 }
 
+.cor-preto {
+    background-color: #202124;
+}
+
 /* ===== Painel lateral — estilo do cartão de detalhes - agenda.php ===== */
 
 #painelEvento {
@@ -355,6 +359,41 @@
     font-family: "bootstrap-icons";
     content: "\f3c5"; /* geo-alt */
     color: var(--cor-evento, var(--vermelho));
+}
+
+#btnGoogleAgenda,
+#btnBaixarICS {
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--cor-evento, var(--vermelho));
+    color: var(--cor-evento, var(--vermelho));
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+#btnGoogleAgenda::before,
+#btnBaixarICS::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--cor-evento, var(--vermelho));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+#btnGoogleAgenda:hover,
+#btnBaixarICS:hover {
+    color: #fff;
+}
+
+#btnGoogleAgenda:hover::before,
+#btnBaixarICS:hover::before {
+    transform: scaleY(1);
 }
 
 @media (max-width: 991px) {
